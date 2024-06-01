@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "909148010311",
+    "project_id": "minnya-orange-chat",
+    "storage_bucket": "minnya-orange-chat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:909148010311:android:ba8a0142c1978d59b4fe62",
+        "android_client_info": {
+          "package_name": "com.FreshEngine.orange_chat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfpuk8xXRHtfvoOC779Mqofi50dsoebIM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
