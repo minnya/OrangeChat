@@ -4,7 +4,6 @@ import 'package:orange_chat/helpers/supabase/user_model_helper.dart';
 import 'package:orange_chat/models/supabase/users.dart';
 import 'package:orange_chat/views/profile/profile.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import '../../tools/time_diff.dart';
 

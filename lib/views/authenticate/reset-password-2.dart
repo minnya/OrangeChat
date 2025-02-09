@@ -42,7 +42,7 @@ class _ResetPasswordPage2State extends State<ResetPasswordPage2> {
       ),
       body: CustomContainer(
           alignment: Alignment.center,
-          color: Theme.of(context).colorScheme.background,
+          color: Theme.of(context).colorScheme.surface,
           children: [
         CustomContainer(
           alignment: Alignment.centerLeft,

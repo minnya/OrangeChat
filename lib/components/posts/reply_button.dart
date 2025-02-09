@@ -1,7 +1,5 @@
 import 'package:orange_chat/models/supabase/posts.dart';
 import 'package:orange_chat/views/posts/comment_list.dart';
-import 'package:orange_chat/views/posts/edit_post.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 

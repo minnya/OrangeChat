@@ -1,6 +1,5 @@
 import 'package:orange_chat/models/supabase/filter.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class GenderList extends StatefulWidget{
   final FilterModel userFilter;
@@ -30,12 +29,18 @@ class _GenderListState extends State<GenderList> {
           final isSelected = selectedTags.contains(tag);
           return InkWell(
             onTap: () {
-              if (isSelected) selectedTags.removeWhere((element)=> element == tag);
-              else selectedTags.add(tag);
+              if (isSelected) {
+                selectedTags.removeWhere((element)=> element == tag);
+              } else {
+                selectedTags.add(tag);
+              }
               setState(() {});
               // フィルターモデルを更新
-              if(selectedTags.length==1) widget.userFilter.gender = selectedTags.first;
-              else widget.userFilter.gender = "";
+              if(selectedTags.length==1) {
+                widget.userFilter.gender = selectedTags.first;
+              } else {
+                widget.userFilter.gender = "";
+              }
             },
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 200),

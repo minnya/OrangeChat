@@ -1,11 +1,5 @@
-import 'dart:developer';
 import 'package:orange_chat/models/supabase/users.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:socket_io_client/socket_io_client.dart';
-import 'dart:math';
 import 'package:orange_chat/helpers/auth_helper.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 

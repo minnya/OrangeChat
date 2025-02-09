@@ -1,11 +1,9 @@
 import 'package:orange_chat/components/commons/show_dialog.dart';
-import 'package:orange_chat/components/commons/urge_login_dialog.dart';
 import 'package:orange_chat/helpers/auth_helper.dart';
 import 'package:orange_chat/helpers/supabase/post_model_helper.dart';
 import 'package:orange_chat/helpers/supabase/user_model_helper.dart';
 import 'package:orange_chat/models/supabase/comments.dart';
 import 'package:orange_chat/models/supabase/posts.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../helpers/supabase/comment_model_helper.dart';

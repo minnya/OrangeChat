@@ -1,8 +1,6 @@
 import 'dart:async';
 
-import 'package:orange_chat/components/commons/custom_container.dart';
 import 'package:orange_chat/const/variables.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
@@ -20,6 +18,7 @@ class _ImageGalleryState extends State<ImageGallery> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
   List<Size> _imageSizes = [];
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -27,33 +26,37 @@ class _ImageGalleryState extends State<ImageGallery> {
     _loadImageSizes();
   }
 
-  void _loadImageSizes() async {
+  Future<void> _loadImageSizes() async {
+    List<Size> sizes = [];
     for (var url in widget.imageUrls) {
       final image = Image.network("${ConstVariables.SUPABASE_HOSTNAME}$url");
-      final completer = Completer<void>();
-      image.image.resolve(ImageConfiguration()).addListener(
+      final completer = Completer<Size>();
+      image.image.resolve(const ImageConfiguration()).addListener(
         ImageStreamListener((ImageInfo info, bool _) {
-          _imageSizes.add(Size(info.image.width.toDouble(), info.image.height.toDouble()));
-          completer.complete();
+          sizes.add(Size(info.image.width.toDouble(), info.image.height.toDouble()));
+          completer.complete(Size(info.image.width.toDouble(), info.image.height.toDouble()));
         }),
       );
       await completer.future;
     }
-    setState(() {});
+    setState(() {
+      _imageSizes = sizes;
+      _isLoading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Stack(
       alignment: Alignment.center,
       children: [
-        LayoutBuilder(
+        _isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : LayoutBuilder(
           builder: (context, constraints) {
-            return Container(
-              height: _imageSizes.isNotEmpty
-                  ? (constraints.maxWidth / _imageSizes[_currentPage].width) * _imageSizes[_currentPage].height
-                  : 300, // Fallback height while loading
+            double aspectRatio = _imageSizes[_currentPage].width / _imageSizes[_currentPage].height;
+            return AspectRatio(
+              aspectRatio: aspectRatio,
               child: PhotoViewGallery.builder(
                 itemCount: widget.imageUrls.length,
                 pageController: _pageController,
@@ -66,30 +69,27 @@ class _ImageGalleryState extends State<ImageGallery> {
                   return PhotoViewGalleryPageOptions(
                     imageProvider: NetworkImage("${ConstVariables.SUPABASE_HOSTNAME}${widget.imageUrls[index]}"),
                     initialScale: PhotoViewComputedScale.contained,
-                    minScale: PhotoViewComputedScale.contained * 1,
-                    maxScale: PhotoViewComputedScale.covered * 1,
+                    minScale: PhotoViewComputedScale.contained,
+                    maxScale: PhotoViewComputedScale.covered,
                   );
                 },
                 scrollPhysics: const BouncingScrollPhysics(),
                 backgroundDecoration: const BoxDecoration(
-                  color: Colors.black,
+                  color: Colors.transparent, // 背景を透明にする
                 ),
               ),
             );
-          }
+          },
         ),
-        Positioned(
-          bottom: 10,
-            child: _buildPageIndicator()
-        ),
+        if (!_isLoading) Positioned(bottom: 10, child: _buildPageIndicator()),
       ],
     );
   }
 
   Widget _buildPageIndicator() {
-    return widget.imageUrls.length<=1
-        ?const SizedBox()
-        :Row(
+    return widget.imageUrls.length <= 1
+        ? const SizedBox()
+        : Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(widget.imageUrls.length, (index) {
         return AnimatedContainer(
@@ -98,9 +98,7 @@ class _ImageGalleryState extends State<ImageGallery> {
           height: 6,
           width: 6,
           decoration: BoxDecoration(
-            color: _currentPage == index
-                ? Theme.of(context).colorScheme.surface
-                : Colors.grey,
+            color: _currentPage == index ? Theme.of(context).colorScheme.surface : Colors.grey,
             borderRadius: BorderRadius.circular(3),
           ),
         );

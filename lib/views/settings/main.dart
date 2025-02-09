@@ -5,7 +5,8 @@ import 'package:orange_chat/views/settings/block_users.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+
+import '../billing/main.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -35,6 +36,31 @@ class _SettingsPageState extends State<SettingsPage> {
           child: ListView(
             children: [
               _SingleSection(
+                title: "Your Account",
+                children: [
+                  _CustomListTile(
+                    title: "Profile",
+                    icon: Icons.person_outline_rounded,
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => EditProfileScreen()));
+                    },
+                  ),
+                  _CustomListTile(
+                    title: "Payment",
+                    icon: Icons.payment,
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => InAppPurchaseExample()));
+                    },
+                  ),
+                ],
+              ),
+              _SingleSection(
                 title: "General",
                 children: [
                   _CustomListTile(
@@ -53,16 +79,6 @@ class _SettingsPageState extends State<SettingsPage> {
               _SingleSection(
                 title: "Organization",
                 children: [
-                  _CustomListTile(
-                    title: "Profile",
-                    icon: Icons.person_outline_rounded,
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => EditProfileScreen()));
-                    },
-                  ),
                   _CustomListTile(
                       title: "Messaging", icon: Icons.message_outlined),
                   _CustomListTile(title: "Calling", icon: Icons.phone_outlined),
@@ -94,7 +110,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   _CustomListTile(
                     title: "Delete account",
                     icon: Icons.delete_outlined,
-                    style: TextStyle(color: Theme.of(context).errorColor),
+                    style: TextStyle(color: Theme.of(context).colorScheme.error),
                     onTap: () async{
                       final bool result = await AuthHelper(context: context).delete(context: context);
                       if(result == false) return;
@@ -122,13 +138,12 @@ class _CustomListTile extends StatelessWidget {
   final TextStyle? style;
 
   const _CustomListTile({
-    Key? key,
     required this.title,
     required this.icon,
-    this.trailing,
     this.onTap,
     this.style,
-  }) : super(key: key);
+    this.trailing
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -146,10 +161,9 @@ class _SingleSection extends StatelessWidget {
   final List<Widget> children;
 
   const _SingleSection({
-    Key? key,
     this.title,
     required this.children,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

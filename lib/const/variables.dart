@@ -1,6 +1,3 @@
-import 'package:orange_chat/helpers/auth_helper.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../helpers/remote_config.dart';
 

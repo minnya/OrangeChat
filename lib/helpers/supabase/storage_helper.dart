@@ -9,7 +9,6 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:intl/intl.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../remote_config.dart';
 
 class StorageHelper {
   final SupabaseClient client = Supabase.instance.client;
@@ -21,7 +20,7 @@ class StorageHelper {
 
     // 画像アップロード
     final String path = await client.storage.from('posts').uploadBinary(
-      '${uid}/${DateFormat('yyyyMMddHHmmss${DateTime.now().millisecond}').format(DateTime.now())}.jpeg',
+      '$uid/${DateFormat('yyyyMMddHHmmss${DateTime.now().millisecond}').format(DateTime.now())}.jpeg',
       img,
       fileOptions: const FileOptions(cacheControl: '3600', upsert: false),
     );

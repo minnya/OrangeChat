@@ -1,11 +1,7 @@
 import 'package:orange_chat/components/user-filter/age.dart';
 import 'package:orange_chat/components/user-filter/gender.dart';
-import 'package:orange_chat/models/supabase/place.dart';
 import 'package:orange_chat/models/supabase/filter.dart';
-import 'package:orange_chat/views/user-list/user_list.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../components/commons/input_place.dart';
 
@@ -95,7 +91,6 @@ class _SingleSection extends StatefulWidget {
   final List<Widget> children;
 
   const _SingleSection({
-    super.key,
     required this.title,
     required this.children,
   });

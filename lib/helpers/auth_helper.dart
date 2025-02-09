@@ -1,8 +1,6 @@
 import 'package:orange_chat/components/commons/show_dialog.dart';
 import 'package:orange_chat/const/variables.dart';
-import 'package:orange_chat/main.dart';
 import 'package:orange_chat/models/supabase/register.dart';
-import 'package:orange_chat/models/supabase/users.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';

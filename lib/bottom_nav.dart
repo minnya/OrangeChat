@@ -7,7 +7,6 @@ import 'package:orange_chat/views/notifications/notifications.dart';
 import 'package:orange_chat/views/profile/profile.dart';
 
 import 'package:orange_chat/views/user-list/user_list.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lazy_load_indexed_stack/lazy_load_indexed_stack.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -15,7 +14,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'components/commons/custom_container.dart';
 
 class SimpleBottomNavigation extends StatefulWidget {
-  const SimpleBottomNavigation({Key? key}) : super(key: key);
+  const SimpleBottomNavigation({super.key});
 
   @override
   State<SimpleBottomNavigation> createState() => _SimpleBottomNavigationState();
@@ -68,7 +67,7 @@ class _SimpleBottomNavigationState extends State<SimpleBottomNavigation> {
                           direction: Direction.HORIZONTAL,
                           alignment: Alignment.centerLeft,
                           children: [
-                            Container(
+                            SizedBox(
                                 width: 36,
                                 child: Image.asset(
                                     "assets/images/icon_orange.png")),

@@ -3,7 +3,6 @@ import 'package:orange_chat/views/notifications/mentioned.dart';
 import 'package:orange_chat/views/notifications/my_footprint.dart';
 import 'package:flutter/material.dart';
 
-import '../../bottom_nav.dart';
 import 'footprint.dart';
 
 class NotificationScreen extends StatefulWidget {

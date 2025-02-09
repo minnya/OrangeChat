@@ -1,12 +1,9 @@
 import 'package:orange_chat/components/commons/custom_container.dart';
 import 'package:orange_chat/helpers/auth_helper.dart';
 import 'package:orange_chat/main.dart';
-import 'package:orange_chat/tools/screen.dart';
 import 'package:orange_chat/views/authenticate/reset-password.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class SignInPage extends StatelessWidget {
   const SignInPage({super.key});
@@ -52,7 +49,7 @@ class SignInPage extends StatelessWidget {
 }
 
 class _Logo extends StatelessWidget {
-  const _Logo({Key? key}) : super(key: key);
+  const _Logo();
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +71,7 @@ class _Logo extends StatelessWidget {
 }
 
 class _FormContent extends StatefulWidget {
-  const _FormContent({Key? key}) : super(key: key);
+  const _FormContent();
 
   @override
   State<_FormContent> createState() => __FormContentState();
@@ -188,11 +185,12 @@ class __FormContentState extends State<_FormContent> {
                   if (_formKey.currentState?.validate() ?? false) {
                     await AuthHelper(context: context).login(
                         _emailController.text, _passwordController.text);
-                    if (AuthHelper().isSignedIn())
+                    if (AuthHelper().isSignedIn()) {
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                               builder: (BuildContext context) => MyApp()));
+                    }
                   }
                 },
               ),

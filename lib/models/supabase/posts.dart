@@ -1,7 +1,6 @@
 
 import 'dart:convert';
 
-import 'package:orange_chat/const/variables.dart';
 import 'package:orange_chat/helpers/auth_helper.dart';
 import 'package:orange_chat/models/supabase/users.dart';
 

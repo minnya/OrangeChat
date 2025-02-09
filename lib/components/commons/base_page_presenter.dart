@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 class BasePagePresenter extends StatefulWidget {
   final List<BasePageModel> pages;
 
-  const BasePagePresenter({Key? key, required this.pages})
-      : super(key: key);
+  const BasePagePresenter({super.key, required this.pages});
 
   @override
   State<BasePagePresenter> createState() => _ResetPasswordPageState();
@@ -72,7 +71,7 @@ class _ResetPasswordPageState extends State<BasePagePresenter> {
                             Theme
                                 .of(context)
                                 .textTheme
-                                .headline6
+                                .headlineSmall
                                 ?.copyWith(
                               fontWeight: FontWeight.bold,
                               color: Colors.black54,
@@ -85,7 +84,7 @@ class _ResetPasswordPageState extends State<BasePagePresenter> {
                             Theme
                                 .of(context)
                                 .textTheme
-                                .bodyText2
+                                .bodyMedium
                                 ?.copyWith(
                               color: Colors.black54,
                             )),

@@ -1,5 +1,4 @@
 import 'package:orange_chat/components/commons/photo_full_preview.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class PhotoPreviewRound extends StatelessWidget {
@@ -46,7 +45,7 @@ class PhotoPreviewRectangle extends StatelessWidget {
   final ImageProvider? imageProvider;
   final double radius;
 
-  PhotoPreviewRectangle({
+  const PhotoPreviewRectangle({
     super.key,
     required this.imageProvider,
     this.radius = 0,

@@ -1,7 +1,4 @@
-import 'package:orange_chat/models/supabase/users.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../models/supabase/edit_users.dart';
 

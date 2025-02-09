@@ -1,9 +1,7 @@
 import 'package:orange_chat/helpers/auth_helper.dart';
-import 'package:orange_chat/models/supabase/follows.dart';
 import 'package:orange_chat/models/supabase/states.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../../models/supabase/users.dart';
 
 class StateModelHelper {
   final client = Supabase.instance.client;

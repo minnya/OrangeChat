@@ -6,7 +6,6 @@ import 'package:orange_chat/components/posts/reply_button.dart';
 import 'package:orange_chat/components/posts/row_post_base.dart';
 import 'package:orange_chat/models/supabase/posts.dart';
 import 'package:orange_chat/views/profile/profile.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../tools/time_diff.dart';

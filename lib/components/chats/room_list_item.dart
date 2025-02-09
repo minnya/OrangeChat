@@ -1,10 +1,7 @@
 import 'package:orange_chat/components/chats/unread.dart';
 import 'package:orange_chat/components/commons/custom_container.dart';
 import 'package:orange_chat/models/supabase/rooms.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:intl/intl.dart';
 
 import '../../tools/time_diff.dart';
 import '../../views/chats/chat_room.dart';

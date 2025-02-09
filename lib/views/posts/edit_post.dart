@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:io';
 
 import 'package:orange_chat/components/commons/custom_container.dart';
@@ -7,9 +6,7 @@ import 'package:orange_chat/components/commons/show_dialog.dart';
 import 'package:orange_chat/helpers/image_picker_helper.dart';
 import 'package:orange_chat/helpers/supabase/post_model_helper.dart';
 import 'package:orange_chat/helpers/supabase/storage_helper.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 
 class EditPostScreen extends StatefulWidget {
@@ -22,7 +19,7 @@ class EditPostScreen extends StatefulWidget {
 class _EditPostScreenState extends State<EditPostScreen> {
   final _textEditController = TextEditingController();
   late FocusNode _focusNode;
-  List<File> _images = [];
+  final List<File> _images = [];
 
   @override
   void initState() {
@@ -46,7 +43,7 @@ class _EditPostScreenState extends State<EditPostScreen> {
         bool result = await showOKCancelDialog(context: context, message: "Do you really exit?");
         return result;
       },
-      child: Container(
+      child: SizedBox(
         width: 600,
         child: Scaffold(
           appBar: AppBar(
@@ -154,7 +151,7 @@ class _EditPostScreenState extends State<EditPostScreen> {
                   children: [
                     IconButton(
                         onPressed: () async {
-                          if(_images.length>4) return null;
+                          if(_images.length>4) return;
                           File? image =
                               await ImagePickerHelper().getImageFromCamera();
                           setState(() {
@@ -164,7 +161,7 @@ class _EditPostScreenState extends State<EditPostScreen> {
                         icon: const Icon(Icons.camera_alt_outlined), color: _images.length>4?Colors.grey:Colors.black,),
                     IconButton(
                         onPressed: () async {
-                          if(_images.length>4) return null;
+                          if(_images.length>4) return;
                           File? image =
                               await ImagePickerHelper().getImageFromGallery();
                           setState(() {

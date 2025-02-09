@@ -1,4 +1,4 @@
-package com.FreshEngine.orange_chat
+package com.minnya.orange_chat
 
 import io.flutter.embedding.android.FlutterActivity
 

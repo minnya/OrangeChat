@@ -2,7 +2,6 @@ import 'package:orange_chat/helpers/auth_helper.dart';
 import 'package:orange_chat/helpers/supabase/user_model_helper.dart';
 import 'package:orange_chat/models/supabase/rooms.dart';
 import 'package:orange_chat/models/supabase/users.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class RoomModelHelper {

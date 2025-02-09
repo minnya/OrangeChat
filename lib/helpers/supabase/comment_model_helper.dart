@@ -1,8 +1,6 @@
 import 'package:orange_chat/components/commons/show_dialog.dart';
 import 'package:orange_chat/helpers/auth_helper.dart';
-import 'package:orange_chat/helpers/supabase/user_model_helper.dart';
 import 'package:orange_chat/models/supabase/posts.dart';
-import 'package:orange_chat/models/supabase/users.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -84,7 +82,7 @@ class CommentModelHelper {
       return result.isNotEmpty;
     }catch(e){
       print(e.toString());
-      showOKDialog(context: context!, message: "Something went wrong");
+      showOKDialog(context: context, message: "Something went wrong");
      return false;
     }
   }

@@ -3,7 +3,6 @@ import 'package:orange_chat/helpers/auth_helper.dart';
 import 'package:orange_chat/helpers/supabase/footprint_model_helper.dart';
 import 'package:orange_chat/models/supabase/filter.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:localstore/localstore.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../models/supabase/users.dart';
@@ -45,7 +44,7 @@ class UserModelHelper {
         await client.from("view_profile").select("*").eq("id", userId);
 
     // ユーザーを取得できない場合は空のユーザーを返す
-    if(postgresMapList.length==0){
+    if(postgresMapList.isEmpty){
       return UserModel.createEmpty();
     }
 

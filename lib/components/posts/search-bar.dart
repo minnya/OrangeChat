@@ -1,4 +1,3 @@
-import 'package:orange_chat/views/posts/posts.dart';
 import 'package:flutter/material.dart';
 
 class SearchAppBar extends StatefulWidget {

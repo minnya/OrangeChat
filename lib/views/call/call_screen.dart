@@ -4,7 +4,6 @@ import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../components/commons/show_dialog.dart';
-import '../../services/signalling.service.dart';
 
 class CallScreen extends StatefulWidget {
   final String callerId, calleeId;
@@ -176,7 +175,7 @@ class _CallScreenState extends State<CallScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         title: const Text("P2P Call App"),
       ),

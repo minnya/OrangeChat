@@ -1,10 +1,7 @@
 import 'dart:io';
 
 import 'package:orange_chat/components/commons/photo_preview_round.dart';
-import 'package:orange_chat/models/supabase/users.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../helpers/image_picker_helper.dart';
 import '../../models/supabase/edit_users.dart';

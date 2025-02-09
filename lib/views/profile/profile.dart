@@ -19,9 +19,9 @@ class ProfileScreen extends StatefulWidget {
   final String? userId;
 
   const ProfileScreen({
-    Key? key,
+    super.key,
     this.userId,
-  }) : super(key: key);
+  });
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -165,9 +165,8 @@ class _ProfileInfoRow extends StatefulWidget {
   final UserModel user;
 
   const _ProfileInfoRow({
-    Key? key,
     required this.user,
-  }) : super(key: key);
+  });
 
   @override
   State<_ProfileInfoRow> createState() => _ProfileInfoRowState();
@@ -258,7 +257,7 @@ class ProfileInfoItem {
 class _TopPortion extends StatelessWidget {
   UserModel user;
 
-  _TopPortion(this.user, {Key? key}) : super(key: key);
+  _TopPortion(this.user);
 
   @override
   Widget build(BuildContext context) {

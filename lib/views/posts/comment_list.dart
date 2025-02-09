@@ -1,14 +1,10 @@
-import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:orange_chat/components/commons/custom_container.dart';
 import 'package:orange_chat/components/posts/comment_item.dart';
 import 'package:orange_chat/helpers/supabase/comment_model_helper.dart';
 import 'package:orange_chat/models/supabase/comments.dart';
 import 'package:orange_chat/models/supabase/posts.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class CommentListScreen extends StatefulWidget {
   final PostModel mentionedPost;

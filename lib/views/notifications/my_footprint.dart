@@ -29,7 +29,7 @@ class _MyFootPrintScreenState extends State<MyFootPrintScreen> with AutomaticKee
       isLoading = true;
     });
     myFootprintList = await FootprintModelHelper().getAllMyFootprints(context);
-    userList = myFootprintList.map((post) => post.user!).toList();
+    userList = myFootprintList.map((post) => post.user).toList();
     setState(() {
       isLoading = false;
     });

@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:orange_chat/components/profile/input_image.dart';
 import 'package:orange_chat/components/commons/input_place.dart';
@@ -6,10 +5,7 @@ import 'package:orange_chat/components/profile/input_gender.dart';
 import 'package:orange_chat/components/profile/input_age.dart';
 import 'package:orange_chat/helpers/auth_helper.dart';
 import 'package:orange_chat/helpers/supabase/storage_helper.dart';
-import 'package:orange_chat/models/supabase/place.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../helpers/supabase/user_model_helper.dart';
 import '../../models/supabase/edit_users.dart';

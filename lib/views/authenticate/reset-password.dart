@@ -2,13 +2,11 @@ import 'package:orange_chat/components/commons/show_dialog.dart';
 import 'package:orange_chat/components/register/input_confirm.dart';
 import 'package:orange_chat/components/register/input_email.dart';
 import 'package:orange_chat/components/register/input_password.dart';
-import 'package:orange_chat/components/register/input_username.dart';
 import 'package:orange_chat/helpers/auth_helper.dart';
 import 'package:orange_chat/main.dart';
 import 'package:orange_chat/models/supabase/register.dart';
 import 'package:flutter/material.dart';
 
-import '../../bottom_nav.dart';
 import '../../components/commons/base_page_presenter.dart';
 
 class ResetPasswordPage extends StatelessWidget {

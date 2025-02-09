@@ -1,9 +1,6 @@
 import 'package:orange_chat/components/commons/custom_container.dart';
 import 'package:orange_chat/models/supabase/users.dart';
-import 'package:orange_chat/views/posts/comment_list.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../../const/variables.dart';
@@ -12,7 +9,6 @@ import '../../helpers/supabase/comment_model_helper.dart';
 import '../../models/supabase/comments.dart';
 import '../../models/supabase/posts.dart';
 import '../../tools/time_diff.dart';
-import '../../views/profile/profile.dart';
 import '../commons/bottom_report_block.dart';
 import '../commons/urge_login_dialog.dart';
 

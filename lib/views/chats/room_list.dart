@@ -1,5 +1,4 @@
 import 'package:orange_chat/components/chats/room_list_item.dart';
-import 'package:orange_chat/helpers/auth_helper.dart';
 import 'package:orange_chat/helpers/supabase/room_model_helper.dart';
 import 'package:orange_chat/models/supabase/rooms.dart';
 import 'package:flutter/material.dart';

@@ -1,20 +1,14 @@
-import 'dart:io' show Platform;
 
 import 'package:orange_chat/bottom_nav.dart';
 import 'package:orange_chat/const/variables.dart';
-import 'package:orange_chat/services/notifications.dart';
-import 'package:orange_chat/services/signalling.service.dart';
 import 'package:orange_chat/views/404.dart';
 import 'package:orange_chat/views/authenticate/email-verified.dart';
 import 'package:orange_chat/views/authenticate/reset-password-2.dart';
-import 'package:orange_chat/views/authenticate/reset-password.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'firebase_options.dart';
-import 'helpers/auth_helper.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

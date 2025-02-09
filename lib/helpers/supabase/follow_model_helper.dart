@@ -33,9 +33,9 @@ class FollowModelHelper {
 
     List<FollowModel> followingList = followings.map((map) => FollowModel.fromMap(map)).toList();
 
-    followingList.forEach((following) {
+    for (var following in followingList) {
       following.user.following=true;
-    });
+    }
 
     return followingList;
   }

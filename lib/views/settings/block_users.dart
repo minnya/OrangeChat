@@ -1,7 +1,5 @@
 import 'package:orange_chat/components/commons/user_list_item.dart';
-import 'package:orange_chat/helpers/supabase/follow_model_helper.dart';
 import 'package:orange_chat/helpers/supabase/user_model_helper.dart';
-import 'package:orange_chat/models/supabase/follows.dart';
 import 'package:orange_chat/models/supabase/users.dart';
 
 
