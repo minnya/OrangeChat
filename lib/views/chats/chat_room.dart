@@ -132,7 +132,7 @@ class MessageMe extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextStyle bodyStyle = Theme.of(context).textTheme.bodySmall!;
+    final TextStyle bodyStyle = Theme.of(context).textTheme.bodyMedium!;
     final TextStyle labelStyle = Theme.of(context).textTheme.labelSmall!.copyWith(fontWeight: FontWeight.normal, fontSize: 10);
     return CustomContainer(
       direction: Direction.HORIZONTAL,
@@ -182,7 +182,7 @@ class Message extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextStyle bodyStyle = Theme.of(context).textTheme.bodySmall!;
+    final TextStyle bodyStyle = Theme.of(context).textTheme.bodyMedium!;
     final TextStyle labelStyle = Theme.of(context).textTheme.labelSmall!.copyWith(fontWeight: FontWeight.normal, fontSize: 10);
     return CustomContainer(
       direction: Direction.HORIZONTAL,

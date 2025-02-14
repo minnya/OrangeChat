@@ -17,13 +17,10 @@ class RoomListItem extends StatelessWidget {
     final TextStyle bodyStyle = Theme.of(context).textTheme.bodyMedium!;
     final TextStyle titleStyle = Theme.of(context).textTheme.bodyMedium!;
 
-    return CustomContainer(
-      direction: Direction.HORIZONTAL,
-        alignment: Alignment.centerLeft,
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-        children: [
-      CustomContainer(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
+    return ListTile(
+      titleAlignment: ListTileTitleAlignment.top,
+      visualDensity: const VisualDensity(vertical: 3),
+      leading: CustomContainer(
         onTap: () {
           Navigator.push(
               context,
@@ -31,48 +28,44 @@ class RoomListItem extends StatelessWidget {
                   builder: (context) => ProfileScreen(userId: item.userId)));
         },
         children: [CircleAvatar(
-          radius: 30,
-          backgroundImage:
-              item.imageUrl == null ? null : NetworkImage(item.imageUrl!),
-        ),
-    ]
+        radius: 30,
+        backgroundImage:
+        item.imageUrl == null ? null : NetworkImage(item.imageUrl!),
       ),
-      Expanded(
+      ]
+      ),
+      title: Text(item.name,style: titleStyle,),
+      subtitle: Text(
+        item.lastMessage ?? "${item.name} sent a photo",
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+        style: bodyStyle.copyWith(color: Colors.grey),
+      ),
+      trailing: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 100.0,),
         child: CustomContainer(
-          onTap: (){
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => ChatRoomScreen(room: item)));
-          },
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-          alignment: Alignment.centerLeft,
+          alignment: Alignment.topRight,
+          padding: const EdgeInsets.only(top: 8),
           children: [
-            Text(item.name,style: titleStyle,),
             Text(
-              item.lastMessage ?? "${item.name} sent a photo",
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: bodyStyle.copyWith(color: Colors.grey),
+              formatTimeDiff(item.createdAt),
+              style: Theme.of(context)
+                  .textTheme
+                  .labelSmall!
+                  .copyWith(color: Colors.black45),
             ),
+            const CustomContainer(height: 10,),
+            UnreadComponent(count: item.countUnread)
           ],
         ),
       ),
-      CustomContainer(
-        width: 50,
-        alignment: Alignment.topRight,
-        padding: const EdgeInsets.only(right: 8, top: 8),
-        children: [
-          Text(
-            formatTimeDiff(item.createdAt),
-            style: Theme.of(context)
-                .textTheme
-                .labelSmall!
-                .copyWith(color: Colors.black45),
-          ),
-          UnreadComponent(count: item.countUnread)
-        ],
-      ),
-    ]);
+      onTap: (){
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ChatRoomScreen(room: item)));
+      },
+    );
+
   }
 }

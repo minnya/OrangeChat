@@ -12,24 +12,27 @@ class CustomContainer extends StatelessWidget {
   final BoxConstraints? constraints;
   final EdgeInsetsGeometry? margin;
   final void Function()? onTap;
+  final bool expand;
 
-  const CustomContainer(
-      {super.key,
-      this.direction,
-      this.children,
-      this.padding,
-      this.alignment,
-      this.color,
-      this.decoration,
-      this.width,
-      this.height,
-      this.constraints,
-      this.margin,
-        this.onTap});
+  const CustomContainer({
+    super.key,
+    this.direction,
+    this.children,
+    this.padding,
+    this.alignment,
+    this.color,
+    this.decoration,
+    this.width,
+    this.height,
+    this.constraints,
+    this.margin,
+    this.onTap,
+    this.expand = false,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    Widget container = GestureDetector(
       onTap: onTap,
       child: Container(
         padding: padding,
@@ -43,22 +46,28 @@ class CustomContainer extends StatelessWidget {
         child: direction == Direction.HORIZONTAL
             ? Row(
           crossAxisAlignment: _mapAlignmentToCrossAxisAlignment(alignment),
-                mainAxisAlignment: _mapAlignmentToMainAxisAlignment(alignment),
-                children: children ?? [],
-              )
+          mainAxisAlignment: _mapAlignmentToMainAxisAlignment(alignment),
+          children: children ?? [],
+        )
             : Column(
           crossAxisAlignment: _mapAlignmentToCrossAxisAlignment(alignment),
           mainAxisAlignment: _mapAlignmentToMainAxisAlignment(alignment),
-                children: children ?? [],
-              ),
+          children: children ?? [],
+        ),
       ),
     );
+
+    return expand ? Expanded(child: container) : container;
   }
 
   CrossAxisAlignment _mapAlignmentToCrossAxisAlignment(Alignment? alignment) {
-    if (alignment == Alignment.topLeft || alignment == Alignment.centerLeft || alignment == Alignment.bottomLeft) {
+    if (alignment == Alignment.topLeft ||
+        alignment == Alignment.centerLeft ||
+        alignment == Alignment.bottomLeft) {
       return CrossAxisAlignment.start;
-    } else if (alignment == Alignment.topRight || alignment == Alignment.centerRight || alignment == Alignment.bottomRight) {
+    } else if (alignment == Alignment.topRight ||
+        alignment == Alignment.centerRight ||
+        alignment == Alignment.bottomRight) {
       return CrossAxisAlignment.end;
     } else {
       return CrossAxisAlignment.center;
@@ -66,9 +75,13 @@ class CustomContainer extends StatelessWidget {
   }
 
   MainAxisAlignment _mapAlignmentToMainAxisAlignment(Alignment? alignment) {
-    if (alignment == Alignment.topCenter || alignment == Alignment.topLeft || alignment == Alignment.topRight) {
+    if (alignment == Alignment.topCenter ||
+        alignment == Alignment.topLeft ||
+        alignment == Alignment.topRight) {
       return MainAxisAlignment.start;
-    } else if (alignment == Alignment.bottomCenter || alignment == Alignment.bottomLeft || alignment == Alignment.bottomRight) {
+    } else if (alignment == Alignment.bottomCenter ||
+        alignment == Alignment.bottomLeft ||
+        alignment == Alignment.bottomRight) {
       return MainAxisAlignment.end;
     } else {
       return MainAxisAlignment.center;
@@ -76,7 +89,4 @@ class CustomContainer extends StatelessWidget {
   }
 }
 
-enum Direction  {
-  VERTICAL,
-  HORIZONTAL
-}
+enum Direction { VERTICAL, HORIZONTAL }

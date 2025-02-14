@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../commons/custom_container.dart';
+
 class UnreadComponent extends StatelessWidget{
   final int count;
 
@@ -9,14 +11,11 @@ class UnreadComponent extends StatelessWidget{
   Widget build(BuildContext context) {
     return count==0
         ?const SizedBox()
-        :Expanded(child:Container(
-      margin: const EdgeInsets.all(4),
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: Theme.of(context).colorScheme.primary,
-      ),
-      child: Center(child: Text(count.toString(),
-          style: TextStyle(color: Theme.of(context).colorScheme.onPrimary,))),
-    ));
+        :CircleAvatar(
+      radius: 12,
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          child: Text(count.toString(),
+                    style: TextStyle(color: Theme.of(context).colorScheme.onPrimary,)),
+        );
   }
 }
