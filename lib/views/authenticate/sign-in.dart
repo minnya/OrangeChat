@@ -1,9 +1,13 @@
+import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:orange_chat/components/authenticate/divider.dart';
 import 'package:orange_chat/components/commons/custom_container.dart';
 import 'package:orange_chat/helpers/auth_helper.dart';
 import 'package:orange_chat/main.dart';
 import 'package:orange_chat/views/authenticate/reset-password.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SignInPage extends StatelessWidget {
   const SignInPage({super.key});
@@ -11,37 +15,30 @@ class SignInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
-    final double screenHeight = MediaQuery.of(context).size.height;
     final double contentWidth = screenWidth>600?600:screenWidth;
-    final double contentHeight = screenHeight>600?600:screenHeight;
     return Scaffold(
+      appBar: AppBar(),
       body: LayoutBuilder(
         builder: (context, constraints) {
-          return SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            child: CustomContainer(
-                      alignment: Alignment.center,
-                      constraints: BoxConstraints(minHeight: constraints.maxHeight),
-                      padding: EdgeInsets.symmetric(
-                          horizontal: (screenWidth-contentWidth)/2+30,
-                        vertical: (screenHeight-contentHeight)/2
-                      ),
-                        children: [
-                          AppBar(
-                            title: _Logo(),
-                          ),
-                          SizedBox(height: 24,),
-                          Text(
-                            "Login",
-                            style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                              fontSize: 40,
-                            ),
-                          ),
-                          SizedBox(height: 24,),
-                          _FormContent()
-                    ]
+          double screenHeight = MediaQuery.of(context).size.height;
+          double keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
+          double remainingHeight = screenHeight - keyboardHeight;
+          bool isWideScreen = screenWidth > 600;
+          return CustomContainer(
+                    alignment: Alignment.center,
+                    // direction: isWideScreen?Direction.HORIZONTAL:Direction.VERTICAL,
+                    height: remainingHeight,
+                    // constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: (screenWidth-contentWidth)/2+30,
+                      // vertical: (remainingHeight-contentHeight)/2
                     ),
-          );
+                      children: [
+                        _Logo(),
+                        SizedBox(height: 24,),
+                        _FormContent()
+                  ]
+                  );
         }
       ),
     );
@@ -194,6 +191,27 @@ class __FormContentState extends State<_FormContent> {
                   }
                 },
               ),
+            ),
+            const TextDivider(text: "or"),
+            SignInButton(
+              Buttons.Google,
+              onPressed: () async{
+                GoogleSignIn _googleSignIn = GoogleSignIn(
+                  // Optional clientId
+                  clientId: '',
+                );
+                final SupabaseClient client = Supabase.instance.client;
+                TargetPlatform platform = Theme.of(context).platform;
+
+                if(platform == TargetPlatform.android || platform== TargetPlatform.iOS) {}
+                else if(platform == TargetPlatform.windows || platform == TargetPlatform.macOS || platform == TargetPlatform.linux){
+                  client.auth.signInWithOAuth(
+                    OAuthProvider.google,
+                    authScreenLaunchMode: LaunchMode.platformDefault
+                  );
+                }
+                _googleSignIn.signIn();
+              },
             ),
           ],
         ),
