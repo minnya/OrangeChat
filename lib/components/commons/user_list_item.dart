@@ -1,9 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:orange_chat/components/commons/show_dialog.dart';
 import 'package:orange_chat/helpers/supabase/follow_model_helper.dart';
 import 'package:orange_chat/helpers/supabase/user_model_helper.dart';
 import 'package:orange_chat/models/supabase/users.dart';
 import 'package:orange_chat/views/profile/profile.dart';
-import 'package:flutter/material.dart';
 
 import '../../tools/time_diff.dart';
 
@@ -34,7 +34,8 @@ class _UserListItemState extends State<UserListItem> {
 
   @override
   Widget build(BuildContext context) {
-    final TextStyle bodyStyle = Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.grey);
+    final TextStyle bodyStyle =
+        Theme.of(context).textTheme.bodyMedium!.copyWith(color: Colors.grey);
     final TextStyle titleStyle = Theme.of(context).textTheme.bodyMedium!;
 
     return RefreshIndicator(
@@ -47,17 +48,20 @@ class _UserListItemState extends State<UserListItem> {
           String labelText = widget.isBlockButton
               ? "Unblock"
               : isEnabled
-              ? "Following"
-              : "Follow";
+                  ? "Following"
+                  : "Follow";
 
           return ListTile(
             titleAlignment: ListTileTitleAlignment.top,
             visualDensity: const VisualDensity(vertical: 3),
             leading: CircleAvatar(
               radius: 30,
-              backgroundImage: item.iconUrl == null
-                  ? null
-                  : NetworkImage(item.iconUrl!),
+              foregroundImage:
+                  item.iconUrl == null ? null : NetworkImage(item.iconUrl!),
+              child: Icon(
+                Icons.person,
+                color: Theme.of(context).colorScheme.inversePrimary,
+              ),
             ),
             title: Text(
               item.age != null && item.age!.isNotEmpty
@@ -111,10 +115,10 @@ class _UserListItemState extends State<UserListItem> {
                   child: Text(
                     labelText,
                     style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                      color: isEnabled
-                          ? Theme.of(context).colorScheme.onPrimary
-                          : Theme.of(context).colorScheme.primary,
-                    ),
+                          color: isEnabled
+                              ? Theme.of(context).colorScheme.onPrimary
+                              : Theme.of(context).colorScheme.primary,
+                        ),
                   ),
                 ),
               ],
@@ -122,7 +126,8 @@ class _UserListItemState extends State<UserListItem> {
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (BuildContext context) => ProfileScreen(userId: item.id),
+                builder: (BuildContext context) =>
+                    ProfileScreen(userId: item.id),
               ),
             ),
           );

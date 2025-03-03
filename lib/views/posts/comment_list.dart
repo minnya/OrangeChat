@@ -1,10 +1,9 @@
-
+import 'package:flutter/material.dart';
 import 'package:orange_chat/components/commons/custom_container.dart';
 import 'package:orange_chat/components/posts/comment_item.dart';
 import 'package:orange_chat/helpers/supabase/comment_model_helper.dart';
 import 'package:orange_chat/models/supabase/comments.dart';
 import 'package:orange_chat/models/supabase/posts.dart';
-import 'package:flutter/material.dart';
 
 class CommentListScreen extends StatefulWidget {
   final PostModel mentionedPost;
@@ -109,7 +108,7 @@ class _CommentListScreenState extends State<CommentListScreen> {
             return Column(
               children: [
                 widget.mentionedComment == null
-                    ? SizedBox()
+                    ? const SizedBox()
                     : Container(
                         color: Colors.grey.withAlpha(25),
                         child: CommentListItem(
@@ -157,8 +156,8 @@ class _CommentListScreenState extends State<CommentListScreen> {
                                             .textTheme
                                             .labelMedium!
                                             .copyWith(
-                                                color:
-                                                    Theme.of(context).primaryColor))
+                                                color: Theme.of(context)
+                                                    .primaryColor))
                                   ],
                                       style: Theme.of(context)
                                           .textTheme
@@ -167,13 +166,22 @@ class _CommentListScreenState extends State<CommentListScreen> {
                             ),
                           ),
                           CustomContainer(
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16, vertical: 4),
                             alignment: Alignment.center,
-                            onTap: (){
-                              toReplyComment=null;
+                            onTap: () {
+                              toReplyComment = null;
                               setState(() {});
                             },
-                            children: [Text("×", style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.grey),), ],
+                            children: [
+                              Text(
+                                "×",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .copyWith(color: Colors.grey),
+                              ),
+                            ],
                           )
                         ],
                       )
@@ -227,11 +235,12 @@ class _CommentListScreenState extends State<CommentListScreen> {
                                         .putComment(
                                       message: _textEditController.text,
                                       mentionedPostId: widget.mentionedPost.id,
-                                      mentionedCommentId: widget.mentionedComment?.id,
+                                      mentionedCommentId:
+                                          widget.mentionedComment?.id,
                                       mentionedUserId: toReplyComment?.ownerId,
                                     );
                                     _textEditController.text = "";
-                                    toReplyComment=null;
+                                    toReplyComment = null;
                                     FocusScope.of(context).unfocus();
                                     setState(() {});
                                   }

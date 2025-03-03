@@ -1,13 +1,9 @@
-import 'package:flutter_signin_button/flutter_signin_button.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:orange_chat/components/authenticate/divider.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
 import 'package:orange_chat/components/commons/custom_container.dart';
 import 'package:orange_chat/helpers/auth_helper.dart';
 import 'package:orange_chat/main.dart';
 import 'package:orange_chat/views/authenticate/reset-password.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SignInPage extends StatelessWidget {
   const SignInPage({super.key});
@@ -15,32 +11,31 @@ class SignInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
-    final double contentWidth = screenWidth>600?600:screenWidth;
+    final double contentWidth = screenWidth > 600 ? 600 : screenWidth;
     return Scaffold(
       appBar: AppBar(),
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          double screenHeight = MediaQuery.of(context).size.height;
-          double keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
-          double remainingHeight = screenHeight - keyboardHeight;
-          bool isWideScreen = screenWidth > 600;
-          return CustomContainer(
-                    alignment: Alignment.center,
-                    // direction: isWideScreen?Direction.HORIZONTAL:Direction.VERTICAL,
-                    height: remainingHeight,
-                    // constraints: BoxConstraints(minHeight: constraints.maxHeight),
-                    padding: EdgeInsets.symmetric(
-                        horizontal: (screenWidth-contentWidth)/2+30,
-                      // vertical: (remainingHeight-contentHeight)/2
-                    ),
-                      children: [
-                        _Logo(),
-                        SizedBox(height: 24,),
-                        _FormContent()
-                  ]
-                  );
-        }
-      ),
+      body: LayoutBuilder(builder: (context, constraints) {
+        double screenHeight = MediaQuery.of(context).size.height;
+        double keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
+        double remainingHeight = screenHeight - keyboardHeight;
+        bool isWideScreen = screenWidth > 600;
+        return CustomContainer(
+            alignment: Alignment.center,
+            // direction: isWideScreen?Direction.HORIZONTAL:Direction.VERTICAL,
+            height: remainingHeight,
+            // constraints: BoxConstraints(minHeight: constraints.maxHeight),
+            padding: EdgeInsets.symmetric(
+              horizontal: (screenWidth - contentWidth) / 2 + 30,
+              // vertical: (remainingHeight-contentHeight)/2
+            ),
+            children: const [
+              _Logo(),
+              SizedBox(
+                height: 24,
+              ),
+              _FormContent()
+            ]);
+      }),
     );
   }
 }
@@ -54,13 +49,15 @@ class _Logo extends StatelessWidget {
       direction: Direction.HORIZONTAL,
       children: [
         SizedBox(
-          height: 60,
+            height: 60,
             width: 60,
-            child: Image.asset("assets/images/icon_orange.png")
-        ),
+            child: Image.asset("assets/images/icon_orange.png")),
         Text(
           "Orange",
-          style: Theme.of(context).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.bold, color: Theme.of(context).primaryColor, fontSize: 50),
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).primaryColor,
+              fontSize: 50),
         )
       ],
     );
@@ -152,7 +149,9 @@ class __FormContentState extends State<_FormContent> {
             RichText(
                 text: TextSpan(
                     text: 'Forgot password?',
-                    style: TextStyle(color: Theme.of(context).colorScheme.primary, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary,
+                        fontWeight: FontWeight.bold),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
                         Navigator.push(
@@ -174,14 +173,13 @@ class __FormContentState extends State<_FormContent> {
                   padding: EdgeInsets.all(10.0),
                   child: Text(
                     'Sign in',
-                    style:
-                        TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 ),
                 onPressed: () async {
                   if (_formKey.currentState?.validate() ?? false) {
-                    await AuthHelper(context: context).login(
-                        _emailController.text, _passwordController.text);
+                    await AuthHelper(context: context)
+                        .login(_emailController.text, _passwordController.text);
                     if (AuthHelper().isSignedIn()) {
                       Navigator.pushReplacement(
                           context,
@@ -192,27 +190,27 @@ class __FormContentState extends State<_FormContent> {
                 },
               ),
             ),
-            const TextDivider(text: "or"),
-            SignInButton(
-              Buttons.Google,
-              onPressed: () async{
-                GoogleSignIn _googleSignIn = GoogleSignIn(
-                  // Optional clientId
-                  clientId: '',
-                );
-                final SupabaseClient client = Supabase.instance.client;
-                TargetPlatform platform = Theme.of(context).platform;
-
-                if(platform == TargetPlatform.android || platform== TargetPlatform.iOS) {}
-                else if(platform == TargetPlatform.windows || platform == TargetPlatform.macOS || platform == TargetPlatform.linux){
-                  client.auth.signInWithOAuth(
-                    OAuthProvider.google,
-                    authScreenLaunchMode: LaunchMode.platformDefault
-                  );
-                }
-                _googleSignIn.signIn();
-              },
-            ),
+            // const TextDivider(text: "or"),
+            // SignInButton(
+            //   Buttons.Google,
+            //   onPressed: () async{
+            //     GoogleSignIn _googleSignIn = GoogleSignIn(
+            //       // Optional clientId
+            //       clientId: '',
+            //     );
+            //     final SupabaseClient client = Supabase.instance.client;
+            //     TargetPlatform platform = Theme.of(context).platform;
+            //
+            //     if(platform == TargetPlatform.android || platform== TargetPlatform.iOS) {}
+            //     else if(platform == TargetPlatform.windows || platform == TargetPlatform.macOS || platform == TargetPlatform.linux){
+            //       client.auth.signInWithOAuth(
+            //         OAuthProvider.google,
+            //         authScreenLaunchMode: LaunchMode.platformDefault
+            //       );
+            //     }
+            //     _googleSignIn.signIn();
+            //   },
+            // ),
           ],
         ),
       ),

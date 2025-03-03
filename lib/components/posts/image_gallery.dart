@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:orange_chat/const/variables.dart';
 import 'package:flutter/material.dart';
+import 'package:orange_chat/const/variables.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
@@ -33,8 +33,10 @@ class _ImageGalleryState extends State<ImageGallery> {
       final completer = Completer<Size>();
       image.image.resolve(const ImageConfiguration()).addListener(
         ImageStreamListener((ImageInfo info, bool _) {
-          sizes.add(Size(info.image.width.toDouble(), info.image.height.toDouble()));
-          completer.complete(Size(info.image.width.toDouble(), info.image.height.toDouble()));
+          sizes.add(
+              Size(info.image.width.toDouble(), info.image.height.toDouble()));
+          completer.complete(
+              Size(info.image.width.toDouble(), info.image.height.toDouble()));
         }),
       );
       await completer.future;
@@ -53,34 +55,36 @@ class _ImageGalleryState extends State<ImageGallery> {
         _isLoading
             ? const Center(child: CircularProgressIndicator())
             : LayoutBuilder(
-          builder: (context, constraints) {
-            double aspectRatio = _imageSizes[_currentPage].width / _imageSizes[_currentPage].height;
-            return AspectRatio(
-              aspectRatio: aspectRatio,
-              child: PhotoViewGallery.builder(
-                itemCount: widget.imageUrls.length,
-                pageController: _pageController,
-                onPageChanged: (index) {
-                  setState(() {
-                    _currentPage = index;
-                  });
-                },
-                builder: (context, index) {
-                  return PhotoViewGalleryPageOptions(
-                    imageProvider: NetworkImage("${ConstVariables.SUPABASE_HOSTNAME}${widget.imageUrls[index]}"),
-                    initialScale: PhotoViewComputedScale.contained,
-                    minScale: PhotoViewComputedScale.contained,
-                    maxScale: PhotoViewComputedScale.covered,
+                builder: (context, constraints) {
+                  double aspectRatio = _imageSizes[_currentPage].width /
+                      _imageSizes[_currentPage].height;
+                  return AspectRatio(
+                    aspectRatio: aspectRatio,
+                    child: PhotoViewGallery.builder(
+                      itemCount: widget.imageUrls.length,
+                      pageController: _pageController,
+                      onPageChanged: (index) {
+                        setState(() {
+                          _currentPage = index;
+                        });
+                      },
+                      builder: (context, index) {
+                        return PhotoViewGalleryPageOptions(
+                          imageProvider: NetworkImage(
+                              "${ConstVariables.SUPABASE_HOSTNAME}${widget.imageUrls[index]}"),
+                          initialScale: PhotoViewComputedScale.contained,
+                          minScale: PhotoViewComputedScale.contained,
+                          maxScale: PhotoViewComputedScale.covered,
+                        );
+                      },
+                      scrollPhysics: const BouncingScrollPhysics(),
+                      backgroundDecoration: const BoxDecoration(
+                        color: Colors.transparent, // 背景を透明にする
+                      ),
+                    ),
                   );
                 },
-                scrollPhysics: const BouncingScrollPhysics(),
-                backgroundDecoration: const BoxDecoration(
-                  color: Colors.transparent, // 背景を透明にする
-                ),
               ),
-            );
-          },
-        ),
         if (!_isLoading) Positioned(bottom: 10, child: _buildPageIndicator()),
       ],
     );
@@ -90,19 +94,21 @@ class _ImageGalleryState extends State<ImageGallery> {
     return widget.imageUrls.length <= 1
         ? const SizedBox()
         : Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(widget.imageUrls.length, (index) {
-        return AnimatedContainer(
-          duration: const Duration(milliseconds: 300),
-          margin: const EdgeInsets.symmetric(horizontal: 4.0),
-          height: 6,
-          width: 6,
-          decoration: BoxDecoration(
-            color: _currentPage == index ? Theme.of(context).colorScheme.surface : Colors.grey,
-            borderRadius: BorderRadius.circular(3),
-          ),
-        );
-      }),
-    );
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(widget.imageUrls.length, (index) {
+              return AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
+                margin: const EdgeInsets.symmetric(horizontal: 4.0),
+                height: 6,
+                width: 6,
+                decoration: BoxDecoration(
+                  color: _currentPage == index
+                      ? Theme.of(context).colorScheme.surface
+                      : Colors.grey,
+                  borderRadius: BorderRadius.circular(3),
+                ),
+              );
+            }),
+          );
   }
 }

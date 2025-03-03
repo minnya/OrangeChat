@@ -1,7 +1,9 @@
+import 'package:flutter/material.dart';
+import 'package:orange_chat/components/authenticate/divider.dart';
+import 'package:orange_chat/components/commons/custom_container.dart';
 import 'package:orange_chat/components/user-filter/age.dart';
 import 'package:orange_chat/components/user-filter/gender.dart';
 import 'package:orange_chat/models/supabase/filter.dart';
-import 'package:flutter/material.dart';
 
 import '../../components/commons/input_place.dart';
 
@@ -26,7 +28,6 @@ class _UserFilterScreenState extends State<UserFilterScreen> {
     return FutureBuilder<FilterModel>(
         future: _filterModel,
         builder: (context, snapshot) {
-
           if (!snapshot.hasData) {
             return const Center(
               child: CircularProgressIndicator(),
@@ -38,8 +39,11 @@ class _UserFilterScreenState extends State<UserFilterScreen> {
             appBar: AppBar(
               title: const Text("User Filter"),
               leading: IconButton(
-                onPressed: (){
-                  Navigator.pop(context, true,);
+                onPressed: () {
+                  Navigator.pop(
+                    context,
+                    true,
+                  );
                 },
                 icon: const Icon(Icons.close_rounded),
               ),
@@ -55,27 +59,39 @@ class _UserFilterScreenState extends State<UserFilterScreen> {
               ],
             ),
             body: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16,),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16,
+              ),
               constraints: const BoxConstraints(maxWidth: 400),
               child: ListView(
                 children: [
                   _SingleSection(
                     title: "Gender",
                     children: [
-                      GenderList(userFilter: userFilter,),
+                      GenderList(
+                        userFilter: userFilter,
+                      ),
                     ],
                   ),
                   _SingleSection(
                     title: "Age",
                     children: [
-                      AgeFilter(userFilter: userFilter,),
+                      AgeFilter(
+                        userFilter: userFilter,
+                      ),
                     ],
                   ),
                   _SingleSection(
                     title: "Place",
                     children: [
-                      InputPlace(isState: false, placeModel: userFilter.placeModel,),
-                      InputPlace(isState: true, placeModel: userFilter.placeModel,),
+                      InputPlace(
+                        isState: false,
+                        placeModel: userFilter.placeModel,
+                      ),
+                      InputPlace(
+                        isState: true,
+                        placeModel: userFilter.placeModel,
+                      ),
                     ],
                   ),
                 ],
@@ -106,20 +122,13 @@ class _SingleSectionState extends State<_SingleSection> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 16),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            widget.title.toUpperCase(),
-            style: Theme.of(context).textTheme.labelMedium,
-          ),
+        TextDivider(
+          text: widget.title,
+          alignment: Alignment.centerLeft,
         ),
-        Container(
-          width: double.infinity,
-          color: Colors.white,
-          child: Column(
-            children: widget.children,
-          ),
+        CustomContainer(
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          children: widget.children,
         ),
       ],
     );

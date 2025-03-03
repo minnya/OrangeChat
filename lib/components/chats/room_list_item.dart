@@ -1,7 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:orange_chat/components/chats/unread.dart';
 import 'package:orange_chat/components/commons/custom_container.dart';
 import 'package:orange_chat/models/supabase/rooms.dart';
-import 'package:flutter/material.dart';
 
 import '../../tools/time_diff.dart';
 import '../../views/chats/chat_room.dart';
@@ -21,20 +21,27 @@ class RoomListItem extends StatelessWidget {
       titleAlignment: ListTileTitleAlignment.top,
       visualDensity: const VisualDensity(vertical: 3),
       leading: CustomContainer(
-        onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => ProfileScreen(userId: item.userId)));
-        },
-        children: [CircleAvatar(
-        radius: 30,
-        backgroundImage:
-        item.imageUrl == null ? null : NetworkImage(item.imageUrl!),
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ProfileScreen(userId: item.userId)));
+          },
+          children: [
+            CircleAvatar(
+              radius: 30,
+              foregroundImage:
+                  item.imageUrl == null ? null : NetworkImage(item.imageUrl!),
+              child: Icon(
+                Icons.person,
+                color: Theme.of(context).colorScheme.inversePrimary,
+              ),
+            ),
+          ]),
+      title: Text(
+        item.name,
+        style: titleStyle,
       ),
-      ]
-      ),
-      title: Text(item.name,style: titleStyle,),
       subtitle: Text(
         item.lastMessage ?? "${item.name} sent a photo",
         maxLines: 2,
@@ -42,7 +49,9 @@ class RoomListItem extends StatelessWidget {
         style: bodyStyle.copyWith(color: Colors.grey),
       ),
       trailing: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 100.0,),
+        constraints: const BoxConstraints(
+          maxWidth: 100.0,
+        ),
         child: CustomContainer(
           alignment: Alignment.topRight,
           padding: const EdgeInsets.only(top: 8),
@@ -54,18 +63,19 @@ class RoomListItem extends StatelessWidget {
                   .labelSmall!
                   .copyWith(color: Colors.black45),
             ),
-            const CustomContainer(height: 10,),
+            const CustomContainer(
+              height: 10,
+            ),
             UnreadComponent(count: item.countUnread)
           ],
         ),
       ),
-      onTap: (){
+      onTap: () {
         Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => ChatRoomScreen(room: item)));
       },
     );
-
   }
 }

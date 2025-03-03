@@ -1,14 +1,14 @@
-import 'package:orange_chat/components/commons/photo_preview_round.dart';
+import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:orange_chat/components/commons/bottom_report_block.dart';
+import 'package:orange_chat/components/commons/photo_preview_round.dart';
 import 'package:orange_chat/components/profile/button_follow.dart';
 import 'package:orange_chat/components/profile/button_message.dart';
 import 'package:orange_chat/helpers/auth_helper.dart';
+import 'package:orange_chat/views/posts/posts.dart';
 import 'package:orange_chat/views/profile/followers.dart';
 import 'package:orange_chat/views/profile/followings.dart';
-import 'package:orange_chat/views/posts/posts.dart';
 import 'package:orange_chat/views/settings/main.dart';
-import 'package:flutter/material.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../../components/commons/urge_login_dialog.dart';
 import '../../helpers/supabase/user_model_helper.dart';
@@ -40,8 +40,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Future getUser() async {
     setState(() => isLoading = true);
-    user = (await UserModelHelper()
-        .get(widget.userId ?? AuthHelper().getUID()));
+    user =
+        (await UserModelHelper().get(widget.userId ?? AuthHelper().getUID()));
     setState(() => isLoading = false);
   }
 
@@ -54,17 +54,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
         title: const Text("Profile"),
         actions: [
           widget.userId == null
-          ?const SizedBox()
-          :IconButton(
-            onPressed: () {
-              showCupertinoModalBottomSheet(
-                  context: context,
-                  expand: false,
-                  builder: (BuildContext context) => ReportBlockBottomMenu(userModel: user,)
-              );
-            },
-            icon: const Icon(Icons.more_vert_rounded),
-          ),
+              ? const SizedBox()
+              : IconButton(
+                  onPressed: () {
+                    showCupertinoModalBottomSheet(
+                        context: context,
+                        expand: false,
+                        builder: (BuildContext context) =>
+                            ReportBlockBottomMenu(
+                              userModel: user,
+                            ));
+                  },
+                  icon: const Icon(Icons.more_vert_rounded),
+                ),
         ],
       ),
       floatingActionButton: widget.userId != null
@@ -104,7 +106,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               children: [
                                 //名前・年齢
                                 Text(
-                                  user.age!=null && user.age!.isNotEmpty? "${user.name}, ${user.age}" : user.name,
+                                  user.age != null && user.age!.isNotEmpty
+                                      ? "${user.name}, ${user.age}"
+                                      : user.name,
                                   style: titleStyle,
                                 ),
 
@@ -112,8 +116,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   padding: const EdgeInsets.all(8),
                                   child: Column(
                                     children: [
-                                      user.prefecture == null?const SizedBox():Text(user.prefecture!, style: bodyStyle),
-                                      user.description == null?const SizedBox():Text(user.description!, style: bodyStyle),
+                                      user.prefecture == null
+                                          ? const SizedBox()
+                                          : Text(user.prefecture!,
+                                              style: bodyStyle),
+                                      user.description == null
+                                          ? const SizedBox()
+                                          : Text(user.description!,
+                                              style: bodyStyle),
                                     ],
                                   ),
                                 ),
@@ -121,18 +131,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 Container(
                                   child: widget.userId == null
                                       ? ElevatedButton.icon(
-                                      onPressed: () {
-                                        if (AuthHelper().isSignedIn() == false) {
-                                          showUrgeLoginDialog(context);
-                                          return;
-                                        }
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) => EditProfileScreen()));
-                                      },
-                                      icon: const Icon(Icons.edit, size: 15,),
-                                      label: Text("Edit Profile", style: Theme.of(context).textTheme.labelLarge,),)
+                                          onPressed: () {
+                                            if (AuthHelper().isSignedIn() ==
+                                                false) {
+                                              showUrgeLoginDialog(context);
+                                              return;
+                                            }
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        EditProfileScreen()));
+                                          },
+                                          icon: const Icon(
+                                            Icons.edit,
+                                            size: 15,
+                                          ),
+                                          label: Text(
+                                            "Edit Profile",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelLarge,
+                                          ),
+                                        )
                                       : Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
@@ -220,9 +241,8 @@ class _ProfileInfoRowState extends State<_ProfileInfoRow> {
     );
   }
 
-  Widget _singleItem(BuildContext context, ProfileInfoItem item) =>
-      TextButton(
-        onPressed: (){
+  Widget _singleItem(BuildContext context, ProfileInfoItem item) => TextButton(
+        onPressed: () {
           showCupertinoModalBottomSheet(
               context: context,
               builder: (BuildContext context) => item.destionationWidget);
@@ -234,7 +254,10 @@ class _ProfileInfoRowState extends State<_ProfileInfoRow> {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 item.value.toString(),
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(color: Theme.of(context).colorScheme.primary),
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium
+                    ?.copyWith(color: Theme.of(context).colorScheme.primary),
               ),
             ),
             Text(
@@ -267,15 +290,15 @@ class _TopPortion extends StatelessWidget {
         Container(
           margin: const EdgeInsets.only(bottom: 50),
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                  colors: [
-                    Theme.of(context).colorScheme.primary.withOpacity(0.0),
-                    Theme.of(context).colorScheme.primary.withOpacity(0.1),
-                    Theme.of(context).colorScheme.primary.withOpacity(0.4)
-                  ]),
-              ),
+            gradient: LinearGradient(
+                begin: Alignment.bottomCenter,
+                end: Alignment.topCenter,
+                colors: [
+                  Theme.of(context).colorScheme.primary.withOpacity(0.0),
+                  Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                  Theme.of(context).colorScheme.primary.withOpacity(0.4)
+                ]),
+          ),
         ),
         Align(
           alignment: Alignment.bottomCenter,
@@ -285,13 +308,13 @@ class _TopPortion extends StatelessWidget {
             child: Stack(
               fit: StackFit.expand,
               children: [
-                PhotoPreviewRound(imageProvider: user.iconUrl==null
-                    ?null
-                    :NetworkImage(user.iconUrl!)
-                ),
-                DateTime.now().difference(user.updatedAt).inMinutes<5
-                ?activeLump()
-                :SizedBox(),
+                PhotoPreviewRound(
+                    imageProvider: user.iconUrl == null
+                        ? null
+                        : NetworkImage(user.iconUrl!)),
+                DateTime.now().difference(user.updatedAt).inMinutes < 5
+                    ? activeLump()
+                    : SizedBox(),
               ],
             ),
           ),
@@ -299,7 +322,8 @@ class _TopPortion extends StatelessWidget {
       ],
     );
   }
-  Widget activeLump(){
+
+  Widget activeLump() {
     return Positioned(
       bottom: 0,
       right: 0,
@@ -308,8 +332,8 @@ class _TopPortion extends StatelessWidget {
         backgroundColor: Colors.white,
         child: Container(
           margin: const EdgeInsets.all(8.0),
-          decoration: const BoxDecoration(
-              color: Colors.green, shape: BoxShape.circle),
+          decoration:
+              const BoxDecoration(color: Colors.green, shape: BoxShape.circle),
         ),
       ),
     );

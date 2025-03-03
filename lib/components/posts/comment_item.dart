@@ -1,7 +1,7 @@
-import 'package:orange_chat/components/commons/custom_container.dart';
-import 'package:orange_chat/models/supabase/users.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:orange_chat/components/commons/custom_container.dart';
+import 'package:orange_chat/models/supabase/users.dart';
 
 import '../../const/variables.dart';
 import '../../helpers/auth_helper.dart';
@@ -42,11 +42,16 @@ class _CommentListItemState extends State<CommentListItem> {
             padding: const EdgeInsets.all(8),
             alignment: Alignment.topLeft,
             child: CircleAvatar(
-                radius: 16,
-                backgroundImage: widget.commentModel.ownerIconUrl == null
-                    ? null
-                    : NetworkImage(
-                        "${ConstVariables.SUPABASE_HOSTNAME}${widget.commentModel.ownerIconUrl!}")),
+              radius: 16,
+              foregroundImage: widget.commentModel.ownerIconUrl == null
+                  ? null
+                  : NetworkImage(
+                      "${ConstVariables.SUPABASE_HOSTNAME}${widget.commentModel.ownerIconUrl!}"),
+              child: Icon(
+                Icons.person,
+                color: Theme.of(context).colorScheme.inversePrimary,
+              ),
+            ),
           ),
           Expanded(
             child: CustomContainer(

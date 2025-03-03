@@ -1,5 +1,5 @@
-import 'package:orange_chat/models/supabase/users.dart';
 import 'package:flutter/material.dart';
+import 'package:orange_chat/models/supabase/users.dart';
 
 import '../../views/profile/profile.dart';
 
@@ -12,11 +12,11 @@ class UserListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     Color textColor = Colors.white70;
     Color gradientColor;
-    if(user.gender=="male"){
+    if (user.gender == "male") {
       gradientColor = Colors.lightBlueAccent;
-    }else if(user.gender=="female"){
+    } else if (user.gender == "female") {
       gradientColor = Colors.pinkAccent;
-    }else{
+    } else {
       gradientColor = Colors.blueGrey;
     }
 
@@ -26,73 +26,82 @@ class UserListItem extends StatelessWidget {
             context,
             MaterialPageRoute(
                 builder: (context) => ProfileScreen(
-                  userId: user.id,
-                )));
+                      userId: user.id,
+                    )));
       },
       child: Card(
         elevation: 5.0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8.0),
         ),
-        child: Stack(
-            children: [
-              Container(
-              decoration: user.iconUrl == null
-                  ? null
-                  : BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage(user.iconUrl!),
-                  fit: BoxFit.cover,
-                ),
-              ),
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          gradientColor.withOpacity(0.0),
-                          gradientColor.withOpacity(0.0),
-                          gradientColor.withOpacity(0.1),
-                          gradientColor.withOpacity(0.4),
-                          gradientColor.withOpacity(0.6),
-                        ],
-                      ),
+        child: Stack(alignment: Alignment.center, children: [
+          Icon(
+              size: 50,
+              color: Theme.of(context).colorScheme.inversePrimary,
+              Icons.person),
+          Container(
+            decoration: user.iconUrl == null
+                ? null
+                : BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(user.iconUrl!),
+                      fit: BoxFit.cover,
                     ),
                   ),
-                  DateTime.now().difference(user.updatedAt).inMinutes<5
-                      ?activeLamp()
-                      :const SizedBox(),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          user.age!=null && user.age!.isNotEmpty ? "${user.name}, ${user.age}" : user.name,
-                          style: Theme.of(context).textTheme.titleMedium?.copyWith(color: textColor),
-                        ),
-                        Text(
-                            user.prefecture??"",
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: textColor)
-                        ),
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        gradientColor.withOpacity(0.0),
+                        gradientColor.withOpacity(0.0),
+                        gradientColor.withOpacity(0.1),
+                        gradientColor.withOpacity(0.4),
+                        gradientColor.withOpacity(0.6),
                       ],
                     ),
-                  )
-                ],
-              ),
+                  ),
+                ),
+                DateTime.now().difference(user.updatedAt).inMinutes < 5
+                    ? activeLamp()
+                    : const SizedBox(),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        user.age != null && user.age!.isNotEmpty
+                            ? "${user.name}, ${user.age}"
+                            : user.name,
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium
+                            ?.copyWith(color: textColor),
+                      ),
+                      Text(user.prefecture ?? "",
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(color: textColor)),
+                    ],
+                  ),
+                )
+              ],
             ),
-            ]
-        ),
+          ),
+        ]),
       ),
     );
   }
 
-  Widget activeLamp(){
+  Widget activeLamp() {
     return Positioned(
       bottom: 10,
       right: 10,
@@ -107,5 +116,4 @@ class UserListItem extends StatelessWidget {
       ),
     );
   }
-
 }

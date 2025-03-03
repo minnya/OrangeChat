@@ -1,5 +1,5 @@
-import 'package:orange_chat/components/commons/photo_full_preview.dart';
 import 'package:flutter/material.dart';
+import 'package:orange_chat/components/commons/photo_full_preview.dart';
 
 class PhotoPreviewRound extends StatelessWidget {
   final ImageProvider? imageProvider;
@@ -13,7 +13,10 @@ class PhotoPreviewRound extends StatelessWidget {
     return imageProvider == null
         ? CircleAvatar(
             backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-          )
+            child: Icon(
+                size: 50,
+                color: Theme.of(context).colorScheme.inversePrimary,
+                Icons.person))
         : GestureDetector(
             onTap: () => Navigator.push(
                 context,
