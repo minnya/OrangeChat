@@ -23,11 +23,11 @@ class RoomModel with ChangeNotifier {
 
   factory RoomModel.fromMap(Map<String, dynamic> roomMap) {
     return RoomModel(
-      roomId: roomMap["room_id"],
+      roomId: int.tryParse(roomMap["room_id"].toString()) ?? 0,
       userId: roomMap["member_id"],
       lastMessage: roomMap["last_message"],
       name: roomMap["room_name"],
-      countUnread: roomMap["count_unread"] ?? 0,
+      countUnread: int.tryParse(roomMap["count_unread"].toString()) ?? 0,
       imageUrl: roomMap["image_url"] == null
           ? null
           : "${ConstVariables.SUPABASE_HOSTNAME}${roomMap["image_url"].toString()}",

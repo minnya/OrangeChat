@@ -31,7 +31,7 @@ class _SimpleBottomNavigationState extends State<SimpleBottomNavigation> {
     SignallingService.instance.init(context: context);
 
     //通知を設定
-    CustomNotificationSettings.init();
+    CustomNotificationSettings.init(context);
   }
 
   @override
