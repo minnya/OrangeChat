@@ -31,14 +31,26 @@ class _ImageGalleryState extends State<ImageGallery> {
     for (var url in widget.imageUrls) {
       final image = Image.network("${ConstVariables.SUPABASE_HOSTNAME}$url");
       final completer = Completer<Size>();
+
       image.image.resolve(const ImageConfiguration()).addListener(
-        ImageStreamListener((ImageInfo info, bool _) {
-          sizes.add(
-              Size(info.image.width.toDouble(), info.image.height.toDouble()));
-          completer.complete(
-              Size(info.image.width.toDouble(), info.image.height.toDouble()));
-        }),
-      );
+            ImageStreamListener(
+              (ImageInfo info, bool _) {
+                final size = Size(
+                    info.image.width.toDouble(), info.image.height.toDouble());
+                sizes.add(size);
+                completer.complete(size);
+              },
+              onError: (error, stackTrace) {
+                debugPrint("Image load error: $error");
+
+                // デフォルトサイズ（エラー時）
+                const fallbackSize = Size(100, 100);
+                sizes.add(fallbackSize);
+                completer.complete(fallbackSize);
+              },
+            ),
+          );
+
       await completer.future;
     }
     setState(() {
