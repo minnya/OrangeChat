@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orange_chat/components/commons/star_rating.dart';
 import 'package:orange_chat/models/supabase/users.dart';
 
 import '../../views/profile/profile.dart';
@@ -90,6 +91,13 @@ class UserListItem extends StatelessWidget {
                               .textTheme
                               .bodyMedium
                               ?.copyWith(color: textColor)),
+                      StarRatingWidget(
+                        starCount: 5,
+                        rating: user.score,
+                        size: Size.medium,
+                        textStyle: const TextStyle(color: Colors.white),
+                        alignment: Alignment.topLeft,
+                      ),
                     ],
                   ),
                 )

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:orange_chat/components/commons/custom_container.dart';
 import 'package:orange_chat/components/commons/show_dialog.dart';
+import 'package:orange_chat/components/commons/star_rating.dart';
 import 'package:orange_chat/helpers/supabase/follow_model_helper.dart';
 import 'package:orange_chat/helpers/supabase/user_model_helper.dart';
 import 'package:orange_chat/models/supabase/users.dart';
@@ -69,11 +71,21 @@ class _UserListItemState extends State<UserListItem> {
                   : item.name,
               style: titleStyle,
             ),
-            subtitle: Text(
-              "${item.prefecture}",
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: bodyStyle,
+            subtitle: CustomContainer(
+              alignment: Alignment.topLeft,
+              children: [
+                StarRatingWidget(
+                  alignment: Alignment.topLeft,
+                  starCount: 5,
+                  rating: item.score,
+                ),
+                Text(
+                  "${item.prefecture}",
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: bodyStyle,
+                ),
+              ],
             ),
             trailing: Column(
               crossAxisAlignment: CrossAxisAlignment.end,

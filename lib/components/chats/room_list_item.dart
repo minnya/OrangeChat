@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:orange_chat/components/chats/unread.dart';
 import 'package:orange_chat/components/commons/custom_container.dart';
+import 'package:orange_chat/components/commons/star_rating.dart';
 import 'package:orange_chat/models/supabase/rooms.dart';
 
 import '../../tools/time_diff.dart';
@@ -38,9 +39,23 @@ class RoomListItem extends StatelessWidget {
               ),
             ),
           ]),
-      title: Text(
-        item.name,
-        style: titleStyle,
+      title: CustomContainer(
+        direction: Direction.HORIZONTAL,
+        alignment: Alignment.topCenter,
+        children: [
+          Text(
+            item.name,
+            style: titleStyle,
+          ),
+          const SizedBox(
+            width: 8,
+          ),
+          StarRatingWidget(
+            starCount: 5,
+            rating: item.score ?? 0,
+            size: Size.small,
+          ),
+        ],
       ),
       subtitle: Text(
         item.lastMessage ?? "${item.name} sent a photo",

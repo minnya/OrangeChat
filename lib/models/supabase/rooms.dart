@@ -10,6 +10,7 @@ class RoomModel with ChangeNotifier {
   String? imageUrl;
   int countUnread = 0;
   DateTime createdAt;
+  double? score = 0;
 
   RoomModel({
     required this.roomId,
@@ -19,6 +20,7 @@ class RoomModel with ChangeNotifier {
     required this.countUnread,
     this.imageUrl,
     required this.createdAt,
+    this.score,
   });
 
   factory RoomModel.fromMap(Map<String, dynamic> roomMap) {
@@ -28,6 +30,7 @@ class RoomModel with ChangeNotifier {
       lastMessage: roomMap["last_message"],
       name: roomMap["room_name"],
       countUnread: int.tryParse(roomMap["count_unread"].toString()) ?? 0,
+      score: (roomMap["score"] ?? 0).toDouble(),
       imageUrl: roomMap["image_url"] == null
           ? null
           : "${ConstVariables.SUPABASE_HOSTNAME}${roomMap["image_url"].toString()}",
