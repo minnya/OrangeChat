@@ -1,7 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:orange_chat/components/commons/show_dialog.dart';
 import 'package:orange_chat/helpers/auth_helper.dart';
 import 'package:orange_chat/models/supabase/posts.dart';
-import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../models/supabase/comments.dart';
@@ -16,8 +16,11 @@ class CommentModelHelper {
   // 投稿を全件取得する
   Future<List<CommentModel>> getAll({required PostModel postModel}) async {
     // ユーザーデータを取得
-    PostgrestFilterBuilder<PostgrestList> commentQuery =
-        client.from('view_comment_list').select("*").match({"mentioned_post":postModel.id}).isFilter("mentioned_comment", null);
+    PostgrestFilterBuilder<PostgrestList> commentQuery = client
+        .from('view_comment_list')
+        .select("*")
+        .match({"mentioned_post": postModel.id}).isFilter(
+            "mentioned_comment", null);
 
     List<Map<String, dynamic>> comments = await commentQuery
         // .not("owner", "in", await UserModelHelper().getBlocks()) // Blockしたユーザーの投稿を除外
@@ -28,12 +31,24 @@ class CommentModelHelper {
     }).toList();
 
     // 自分がlikeしているかを判別
-    List likeList = (await client.from("comment_likes").select("*").eq("user", uid)).map((map) => map["comment"]).toList();
+    List likeList = (await client
+            .from("comment_review")
+            .select("*")
+            .eq("user", uid)
+            .eq("score", 1))
+        .map((map) => map["comment"])
+        .toList();
     for (CommentModel comment in commentList) {
       comment.liked = likeList.contains(comment.id);
     }
     // 自分がdislikeしているかを判別
-    List dislikeList = (await client.from("comment_dislikes").select("*").eq("user", uid)).map((map) => map["comment"]).toList();
+    List dislikeList = (await client
+            .from("comment_review")
+            .select("*")
+            .eq("user", uid)
+            .eq("score", -1))
+        .map((map) => map["comment"])
+        .toList();
     for (CommentModel comment in commentList) {
       comment.disliked = dislikeList.contains(comment.id);
     }
@@ -42,25 +57,40 @@ class CommentModelHelper {
   }
 
   // 投稿を全件取得する
-  Future<List<CommentModel>> getAllReplies({required CommentModel commentModel}) async {
+  Future<List<CommentModel>> getAllReplies(
+      {required CommentModel commentModel}) async {
     // ユーザーデータを取得
-    PostgrestFilterBuilder<PostgrestList> commentQuery =
-    client.from('view_comment_list').select("*").match({"mentioned_comment":commentModel.id});
+    PostgrestFilterBuilder<PostgrestList> commentQuery = client
+        .from('view_comment_list')
+        .select("*")
+        .match({"mentioned_comment": commentModel.id});
 
-    List<Map<String, dynamic>> comments = await commentQuery
-        .order("created_at", ascending: false);
+    List<Map<String, dynamic>> comments =
+        await commentQuery.order("created_at", ascending: false);
 
     List<CommentModel> commentList = comments.map((commentMap) {
       return CommentModel.fromMap(commentMap);
     }).toList();
 
     // 自分がlikeしているかを判別
-    List likeList = (await client.from("comment_likes").select("*").eq("user", uid)).map((map) => map["comment"]).toList();
+    List likeList = (await client
+            .from("comment_review")
+            .select("*")
+            .eq("user", uid)
+            .eq("score", 1))
+        .map((map) => map["comment"])
+        .toList();
     for (CommentModel comment in commentList) {
       comment.liked = likeList.contains(comment.id);
     }
     // 自分がdislikeしているかを判別
-    List dislikeList = (await client.from("comment_dislikes").select("*").eq("user", uid)).map((map) => map["comment"]).toList();
+    List dislikeList = (await client
+            .from("comment_review")
+            .select("*")
+            .eq("user", uid)
+            .eq("score", -1))
+        .map((map) => map["comment"])
+        .toList();
     for (CommentModel comment in commentList) {
       comment.disliked = dislikeList.contains(comment.id);
     }
@@ -68,7 +98,11 @@ class CommentModelHelper {
     return commentList;
   }
 
-  Future<bool> putComment({required String message, required int mentionedPostId, int? mentionedCommentId, String? mentionedUserId}) async{
+  Future<bool> putComment(
+      {required String message,
+      required int mentionedPostId,
+      int? mentionedCommentId,
+      String? mentionedUserId}) async {
     try {
       final result = await client.from('comments').insert({
         'owner': uid,
@@ -77,39 +111,49 @@ class CommentModelHelper {
         "mentioned_comment": mentionedCommentId,
         "mentioned_user": mentionedUserId,
       }).select();
-      if(!context.mounted) return false;
+      if (!context.mounted) return false;
       // await showOKDialog(context: context, message: "Comment has been submitted");
       return result.isNotEmpty;
-    }catch(e){
+    } catch (e) {
       print(e.toString());
       showOKDialog(context: context, message: "Something went wrong");
-     return false;
+      return false;
     }
   }
 
-  Future<void> deleteComment({required CommentModel commentModel})async {
+  Future<void> deleteComment({required CommentModel commentModel}) async {
     await client.from("comments").delete().match({"id": commentModel.id});
   }
 
   // Likeを追加する
   Future<bool> putLike(int commentId) async {
-    final result = await client.from('comment_likes').insert({'user': uid, 'comment': commentId}).select("*");
+    final result = await client.from('comment_review').upsert(
+        {'user': uid, 'comment': commentId, "score": 1},
+        onConflict: "user").select("*");
     return result.isNotEmpty;
   }
 
   // Likeを削除する
   Future<void> deleteLike(int commentId) async {
-    await client.from('comment_likes').delete().match({'user': uid, 'comment': commentId});
+    await client
+        .from('comment_review')
+        .delete()
+        .match({'user': uid, 'comment': commentId, "score": 1});
   }
 
   // Dislikeを追加する
   Future<bool> putDislike(int commentId) async {
-    final result = await client.from('comment_dislikes').insert({'user': uid, 'comment': commentId,}).select("*");
+    final result = await client.from('comment_review').upsert(
+        {'user': uid, 'comment': commentId, "score": -1},
+        onConflict: "user").select("*");
     return result.isNotEmpty;
   }
 
   // Dislikeを削除する
   Future<void> deleteDislike(int commentId) async {
-    await client.from('comment_dislikes').delete().match({'user': uid, 'comment': commentId,});
+    await client
+        .from('comment_review')
+        .delete()
+        .match({'user': uid, 'comment': commentId, "score": -1});
   }
 }

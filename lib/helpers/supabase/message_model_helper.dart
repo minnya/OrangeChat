@@ -33,8 +33,10 @@ class MessageModelHelper {
   //　送信処理
   Future<bool> submit({String? message, String? imageUrl}) async {
     // 特定のメッセージ回数になったら、相手を評価するダイアログを表示する
-    final messages = await messageStream.first;
-    if (messages.where((msg) => msg.senderId == uid).toList().length == 50) {
+    final messages = (await messageStream.first)
+        .where((msg) => msg.senderId == uid)
+        .toList();
+    if (messages.length == 50 && context.mounted) {
       final result =
           await showReviewDialog(context: context, roomModel: roomModel);
       if (!result) return false;

@@ -8,9 +8,14 @@ class UserReviewModelHelper {
 
   //　送信処理
   Future<bool> submit(
-      {required RoomModel? roomModel, required int score}) async {
-    final result = await client.from("users_review").insert([
-      {"reviewer": uid, "reviewee": roomModel?.userId, "score": score}
+      {required RoomModel roomModel, required int score}) async {
+    final result = await client.from("chat_review").insert([
+      {
+        "room": roomModel.roomId,
+        "reviewer": uid,
+        "reviewee": roomModel.userId,
+        "score": score
+      }
     ]).select("*");
     return result.isNotEmpty;
   }

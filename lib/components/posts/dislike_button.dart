@@ -5,16 +5,16 @@ import 'package:orange_chat/models/supabase/posts.dart';
 import '../../helpers/auth_helper.dart';
 import '../commons/urge_login_dialog.dart';
 
-class LikeButton extends StatefulWidget {
+class DislikeButton extends StatefulWidget {
   final PostModel item;
 
-  const LikeButton({super.key, required this.item});
+  const DislikeButton({super.key, required this.item});
 
   @override
-  State<LikeButton> createState() => _LikeButtonState();
+  State<DislikeButton> createState() => _DislikeButtonState();
 }
 
-class _LikeButtonState extends State<LikeButton> {
+class _DislikeButtonState extends State<DislikeButton> {
   @override
   Widget build(BuildContext context) {
     return TextButton.icon(
@@ -22,26 +22,26 @@ class _LikeButtonState extends State<LikeButton> {
         if (AuthHelper().isSignedIn() == false) {
           showUrgeLoginDialog(context);
         } else {
-          widget.item.liked
-              ? PostModelHelper(context: context).deleteLike(widget.item.id)
-              : PostModelHelper(context: context).putLike(widget.item.id);
+          widget.item.disliked
+              ? PostModelHelper(context: context).deleteDislike(widget.item.id)
+              : PostModelHelper(context: context).putDislike(widget.item.id);
           setState(() {
-            widget.item.liked = !widget.item.liked;
-            widget.item.liked
-                ? widget.item.likeCount += 1
-                : widget.item.likeCount -= 1;
+            widget.item.disliked = !widget.item.disliked;
+            widget.item.disliked
+                ? widget.item.dislikeCount += 1
+                : widget.item.dislikeCount -= 1;
           });
         }
       },
       icon: Icon(
         color: Colors.grey,
-        widget.item.liked
-            ? Icons.thumb_up_rounded
-            : Icons.thumb_up_alt_outlined,
+        widget.item.disliked
+            ? Icons.thumb_down_rounded
+            : Icons.thumb_down_alt_outlined,
         size: 15,
       ),
       label: Text(
-        widget.item.likeCount.toString(),
+        widget.item.dislikeCount.toString(),
         style: Theme.of(context)
             .textTheme
             .labelMedium!
