@@ -41,6 +41,7 @@ class _ImageGalleryState extends State<ImageGallery> {
       );
       await completer.future;
     }
+    if (!mounted) return;
     setState(() {
       _imageSizes = sizes;
       _isLoading = false;
