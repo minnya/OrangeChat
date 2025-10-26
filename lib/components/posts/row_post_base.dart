@@ -37,7 +37,7 @@ class _RowPostBaseState extends State<RowPostBase> {
               width: 8,
             ),
             StarRatingWidget(
-              size: Size.medium,
+              size: Size.small,
               starCount: 5,
               rating: widget.item.user.score,
               alignment: Alignment.topLeft,

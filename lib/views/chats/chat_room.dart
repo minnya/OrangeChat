@@ -6,6 +6,7 @@ import 'package:orange_chat/components/commons/bottom_report_block.dart';
 import 'package:orange_chat/components/commons/custom_container.dart';
 import 'package:orange_chat/components/commons/photo_preview_round.dart';
 import 'package:orange_chat/components/commons/show_dialog.dart';
+import 'package:orange_chat/components/commons/star_rating.dart';
 import 'package:orange_chat/helpers/auth_helper.dart';
 import 'package:orange_chat/helpers/supabase/message_model_helper.dart';
 import 'package:orange_chat/models/supabase/rooms.dart';
@@ -50,7 +51,22 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
     if (messageModelHelper == null) return Container();
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.room.name),
+        title: CustomContainer(
+          direction: Direction.HORIZONTAL,
+          alignment: Alignment.topCenter,
+          children: [
+            Text(widget.room.name),
+            const SizedBox(
+              width: 8,
+            ),
+            StarRatingWidget(
+              starCount: 5,
+              rating: widget.room.score ?? 0,
+              size: Size.medium,
+              alignment: Alignment.topCenter,
+            )
+          ],
+        ),
         actions: [
           IconButton(
               onPressed: () async {

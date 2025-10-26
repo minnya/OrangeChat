@@ -72,7 +72,7 @@ class RoomListItem extends StatelessWidget {
           padding: const EdgeInsets.only(top: 8),
           children: [
             Text(
-              formatTimeDiff(item.createdAt),
+              formatTimeDiff(item.updatedAt),
               style: Theme.of(context)
                   .textTheme
                   .labelSmall!

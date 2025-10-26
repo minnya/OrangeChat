@@ -9,6 +9,7 @@ import 'package:orange_chat/helpers/auth_helper.dart';
 import 'package:orange_chat/views/posts/posts.dart';
 import 'package:orange_chat/views/profile/followers.dart';
 import 'package:orange_chat/views/profile/followings.dart';
+import 'package:orange_chat/views/profile/score.dart';
 import 'package:orange_chat/views/settings/main.dart';
 
 import '../../components/commons/star_rating.dart';
@@ -114,10 +115,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   : user.name,
                               style: titleStyle,
                             ),
-                            StarRatingWidget(
-                              starCount: 5,
-                              rating: user.score,
-                              size: Size.large,
+
+                            CustomContainer(
+                              onTap: () {
+                                showCupertinoModalBottomSheet(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      ScoreScreen(
+                                    userModel: user,
+                                  ),
+                                );
+                              },
+                              children: [
+                                StarRatingWidget(
+                                  starCount: 5,
+                                  rating: user.score,
+                                  size: Size.medium,
+                                ),
+                              ],
                             ),
 
                             CustomContainer(

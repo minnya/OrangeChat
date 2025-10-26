@@ -12,7 +12,8 @@ class RoomModelHelper {
   void subscribeMessageChange(void Function(PostgresChangePayload) callback) {
     client
         .channel("public:chat_messages")
-        .onPostgresChanges( //相手からのmessageをsubscribe
+        .onPostgresChanges(
+            //相手からのmessageをsubscribe
             event: PostgresChangeEvent.all,
             schema: "public",
             table: "chat_messages",
@@ -21,7 +22,8 @@ class RoomModelHelper {
                 column: "receiver",
                 value: uid),
             callback: callback)
-        .onPostgresChanges( //自分からのメッセージをsubscribe
+        .onPostgresChanges(
+            //自分からのメッセージをsubscribe
             event: PostgresChangeEvent.all,
             schema: "public",
             table: "chat_messages",
@@ -33,17 +35,18 @@ class RoomModelHelper {
         .subscribe();
   }
 
-  void unsubscribe(){
+  void unsubscribe() {
     client.channel("public:chat_message");
   }
 
   // Room一覧を取得する
   Future<List<RoomModel>> getRoomList() async {
-    List<Map<String, dynamic>> roomListMap =
-        await client.from('view_room_list').select("*")
-            .eq("user_id", uid)
-            .not("member_id", "in", await UserModelHelper().getBlocks()
-        );
+    List<Map<String, dynamic>> roomListMap = await client
+        .from('view_room_list')
+        .select("*")
+        .eq("user_id", uid)
+        .not("member_id", "in", await UserModelHelper().getBlocks())
+        .order("updated_at", ascending: false);
     return roomListMap.map((map) => RoomModel.fromMap(map)).toList();
   }
 
@@ -71,10 +74,9 @@ class RoomModelHelper {
 
     // roomが存在しない場合は0を返す
     int roomId = 0;
-    if(rooms.isNotEmpty){
+    if (rooms.isNotEmpty) {
       roomId = rooms.first["room_id"];
     }
-
 
     //必要なのはroomIDだけ
     RoomModel roomModel = RoomModel(
@@ -83,7 +85,8 @@ class RoomModelHelper {
         userId: userModel.id,
         name: userModel.name,
         countUnread: 0,
-        createdAt: DateTime.now());
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now());
 
     return roomModel;
   }

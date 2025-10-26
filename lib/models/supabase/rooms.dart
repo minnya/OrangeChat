@@ -10,6 +10,7 @@ class RoomModel with ChangeNotifier {
   String? imageUrl;
   int countUnread = 0;
   DateTime createdAt;
+  DateTime updatedAt;
   double? score = 0;
 
   RoomModel({
@@ -20,6 +21,7 @@ class RoomModel with ChangeNotifier {
     required this.countUnread,
     this.imageUrl,
     required this.createdAt,
+    required this.updatedAt,
     this.score,
   });
 
@@ -35,6 +37,7 @@ class RoomModel with ChangeNotifier {
           ? null
           : "${ConstVariables.SUPABASE_HOSTNAME}${roomMap["image_url"].toString()}",
       createdAt: DateTime.parse(roomMap["created_at"]),
+      updatedAt: DateTime.parse(roomMap["updated_at"]),
     );
   }
 

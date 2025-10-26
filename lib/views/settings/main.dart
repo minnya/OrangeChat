@@ -5,6 +5,7 @@ import 'package:orange_chat/views/settings/block_users.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../billing/main.dart';
 
@@ -60,6 +61,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                 ],
               ),
+              const Divider(),
               _SingleSection(
                 title: "General",
                 children: [
@@ -73,12 +75,6 @@ class _SettingsPageState extends State<SettingsPage> {
                   const _CustomListTile(
                       title: "Security Status",
                       icon: CupertinoIcons.lock_shield),
-                ],
-              ),
-              const Divider(),
-              _SingleSection(
-                title: "Organization",
-                children: [
                   _CustomListTile(
                       title: "Messaging", icon: Icons.message_outlined),
                   _CustomListTile(title: "Calling", icon: Icons.phone_outlined),
@@ -90,12 +86,14 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
               const Divider(),
               _SingleSection(
+                title: "Support",
                 children: [
                   const _CustomListTile(
                       title: "Help & Feedback",
                       icon: Icons.help_outline_rounded),
-                  const _CustomListTile(
-                      title: "About", icon: Icons.info_outline_rounded),
+                  _CustomListTile(
+                      title: "About", icon: Icons.info_outline_rounded,
+                      onTap: ()=>launchUrl(Uri.parse("https://orangechat.jimdofree.com/"))),
                   _CustomListTile(
                     title: "Sign out",
                     icon: Icons.exit_to_app_rounded,

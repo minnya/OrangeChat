@@ -62,8 +62,8 @@ class CustomContainer extends StatelessWidget {
 
     return expand
         ? Expanded(
-            child: container,
             flex: flex ?? 1,
+            child: container,
           )
         : container;
   }

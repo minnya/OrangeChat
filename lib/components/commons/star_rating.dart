@@ -44,10 +44,10 @@ class _StarRatingWidgetState extends State<StarRatingWidget> {
   // Method to build each individual star based on the rating and index
   Widget buildStar(final BuildContext context, final int index) {
     double starSize = widget.size == Size.small
-        ? 12
+        ? 16
         : widget.size == Size.medium
-            ? 16
-            : 24;
+            ? 24
+            : 32;
     Icon icon;
     // If the index is greater than or equal to the rating, we show an empty star
     if (index >= currentRating) {
@@ -77,26 +77,16 @@ class _StarRatingWidgetState extends State<StarRatingWidget> {
                 .ratingPrimaryColor, // Default to gold color or custom color
       );
     }
-    return GestureDetector(
-      onTap: () {
-        if (widget.onStarTap == null) return;
-        setState(() {
-          currentRating = index + 1.0; // タップされた星でratingを更新
-        });
-
-        widget.onStarTap!(index + 1);
-      },
-      child: icon,
-    );
+    return icon;
   }
 
   @override
   Widget build(final BuildContext context) {
     double labelSize = widget.size == Size.small
-        ? 10
+        ? 12
         : widget.size == Size.medium
-            ? 12
-            : 16;
+            ? 16
+            : 20;
     // Creating a row of stars based on the starCount
     return CustomContainer(
       alignment: widget.alignment,
@@ -106,11 +96,16 @@ class _StarRatingWidgetState extends State<StarRatingWidget> {
             (final index) => buildStar(context, index),
           ) +
           [
-            Text(
-              currentRating.toString(),
-              style: widget.textStyle != null
-                  ? widget.textStyle?.copyWith(fontSize: labelSize)
-                  : TextStyle(fontSize: labelSize),
+            CustomContainer(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              children: [
+                Text(
+                  currentRating.toStringAsFixed(1),
+                  style: widget.textStyle != null
+                      ? widget.textStyle?.copyWith(fontSize: labelSize)
+                      : TextStyle(fontSize: labelSize),
+                ),
+              ],
             )
           ],
     );

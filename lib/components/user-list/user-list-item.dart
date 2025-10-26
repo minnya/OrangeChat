@@ -94,7 +94,7 @@ class UserListItem extends StatelessWidget {
                       StarRatingWidget(
                         starCount: 5,
                         rating: user.score,
-                        size: Size.medium,
+                        size: Size.small,
                         textStyle: const TextStyle(color: Colors.white),
                         alignment: Alignment.topLeft,
                       ),

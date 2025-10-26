@@ -65,20 +65,30 @@ class _UserListItemState extends State<UserListItem> {
                 color: Theme.of(context).colorScheme.inversePrimary,
               ),
             ),
-            title: Text(
-              item.age != null && item.age!.isNotEmpty
-                  ? "${item.name}, ${item.age}"
-                  : item.name,
-              style: titleStyle,
-            ),
-            subtitle: CustomContainer(
-              alignment: Alignment.topLeft,
+            title: CustomContainer(
+              direction: Direction.HORIZONTAL,
+              alignment: Alignment.topCenter,
               children: [
+                Text(
+                  item.age != null && item.age!.isNotEmpty
+                      ? "${item.name}, ${item.age}"
+                      : item.name,
+                  style: titleStyle,
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
                 StarRatingWidget(
                   alignment: Alignment.topLeft,
                   starCount: 5,
                   rating: item.score,
+                  size: Size.small,
                 ),
+              ],
+            ),
+            subtitle: CustomContainer(
+              alignment: Alignment.topLeft,
+              children: [
                 Text(
                   "${item.prefecture}",
                   maxLines: 2,
