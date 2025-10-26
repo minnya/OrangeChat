@@ -1,14 +1,13 @@
+import 'package:flutter/material.dart';
+import 'package:lazy_load_indexed_stack/lazy_load_indexed_stack.dart';
 import 'package:orange_chat/services/notifications.dart';
 import 'package:orange_chat/services/signalling.service.dart';
 import 'package:orange_chat/tools/screen.dart';
 import 'package:orange_chat/views/chats/room_list.dart';
-import 'package:orange_chat/views/posts/posts.dart';
 import 'package:orange_chat/views/notifications/notifications.dart';
+import 'package:orange_chat/views/posts/posts.dart';
 import 'package:orange_chat/views/profile/profile.dart';
-
 import 'package:orange_chat/views/user-list/user_list.dart';
-import 'package:flutter/material.dart';
-import 'package:lazy_load_indexed_stack/lazy_load_indexed_stack.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'components/commons/custom_container.dart';
@@ -63,23 +62,16 @@ class _SimpleBottomNavigationState extends State<SimpleBottomNavigation> {
                         labelType: screenSize == Size.medium
                             ? NavigationRailLabelType.selected
                             : null,
-                        leading: CustomContainer(
-                          direction: Direction.HORIZONTAL,
-                          alignment: Alignment.centerLeft,
-                          children: [
-                            SizedBox(
-                                width: 36,
-                                child: Image.asset(
-                                    "assets/images/icon_orange.png")),
-                            Text(
-                              "Orange",
-                              style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                        leading: Text(
+                          "REVEAL ME",
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleLarge!
+                              .copyWith(
                                 color: Theme.of(context).colorScheme.primary,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 28,
                               ),
-                            ),
-                          ],
                         ),
                         elevation: 5,
                         backgroundColor: Theme.of(context).colorScheme.surface,
