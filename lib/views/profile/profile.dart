@@ -50,7 +50,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final TextStyle bodyStyle = Theme.of(context).textTheme.bodyMedium!;
     final TextStyle titleStyle = Theme.of(context).textTheme.titleMedium!;
     return Scaffold(
       appBar: AppBar(
@@ -115,8 +114,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   : user.name,
                               style: titleStyle,
                             ),
-
-                            CustomContainer(
+                            user.prefecture == null && user.country == null
+                                ? const SizedBox()
+                                : Text(
+                                    [user.prefecture, user.country]
+                                        .where((s) => s != null)
+                                        .join(", "),
+                                    style:
+                                        const TextStyle(color: Colors.black54)),
+                            StarRatingWidget(
+                              starCount: 5,
+                              rating: user.score,
+                              size: Size.medium,
+                              padding: const EdgeInsets.all(8),
                               onTap: () {
                                 showCupertinoModalBottomSheet(
                                   context: context,
@@ -126,64 +136,50 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                 );
                               },
-                              children: [
-                                StarRatingWidget(
-                                  starCount: 5,
-                                  rating: user.score,
-                                  size: Size.medium,
-                                ),
-                              ],
                             ),
 
-                            CustomContainer(
-                              padding: const EdgeInsets.all(8),
-                              children: [
-                                user.prefecture == null
-                                    ? const SizedBox()
-                                    : Text(user.prefecture!, style: bodyStyle),
-                                user.description == null
-                                    ? const SizedBox()
-                                    : Text(user.description!, style: bodyStyle),
-                              ],
-                            ),
+                            user.description == null
+                                ? const SizedBox()
+                                : Text(
+                                    user.description!,
+                                  ),
                             //編集ボタン、フォローボタン、メッセージボタン
-                            Container(
-                              child: widget.userId == null
-                                  ? ElevatedButton.icon(
-                                      onPressed: () {
-                                        if (AuthHelper().isSignedIn() ==
-                                            false) {
-                                          showUrgeLoginDialog(context);
-                                          return;
-                                        }
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    EditProfileScreen()));
-                                      },
-                                      icon: const Icon(
-                                        Icons.edit,
-                                        size: 15,
-                                      ),
-                                      label: Text(
-                                        "Edit Profile",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelLarge,
-                                      ),
-                                    )
-                                  : Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        FollowButton(userModel: user),
-                                        const SizedBox(width: 16.0),
-                                        MessageButton(user: user),
-                                      ],
-                                    ),
+                            CustomContainer(
+                              direction: Direction.HORIZONTAL,
+                              padding: const EdgeInsets.all(16),
+                              children: widget.userId == null
+                                  ? [
+                                      ElevatedButton.icon(
+                                        onPressed: () {
+                                          if (AuthHelper().isSignedIn() ==
+                                              false) {
+                                            showUrgeLoginDialog(context);
+                                            return;
+                                          }
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      EditProfileScreen()));
+                                        },
+                                        icon: const Icon(
+                                          Icons.edit,
+                                          size: 15,
+                                        ),
+                                        label: Text(
+                                          "Edit Profile",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelLarge,
+                                        ),
+                                      )
+                                    ]
+                                  : [
+                                      FollowButton(userModel: user),
+                                      const SizedBox(width: 16.0),
+                                      MessageButton(user: user),
+                                    ],
                             ),
-                            const SizedBox(height: 16),
                             _ProfileInfoRow(
                               user: user,
                             )

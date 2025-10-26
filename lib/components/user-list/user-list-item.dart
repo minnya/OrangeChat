@@ -11,7 +11,6 @@ class UserListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color textColor = Colors.white70;
     Color gradientColor;
     if (user.gender == "male") {
       gradientColor = Colors.lightBlueAccent;
@@ -84,13 +83,13 @@ class UserListItem extends StatelessWidget {
                         style: Theme.of(context)
                             .textTheme
                             .titleMedium
-                            ?.copyWith(color: textColor),
+                            ?.copyWith(color: Colors.white),
                       ),
                       Text(user.prefecture ?? "",
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium
-                              ?.copyWith(color: textColor)),
+                              ?.copyWith(color: Colors.white70)),
                       StarRatingWidget(
                         starCount: 5,
                         rating: user.score,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../models/supabase/register.dart';
 
-class InputUsername extends StatelessWidget{
+class InputUsername extends StatelessWidget {
   final _controller = TextEditingController();
   final RegisterModel registerModel;
 
@@ -13,13 +13,14 @@ class InputUsername extends StatelessWidget{
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       child: TextFormField(
+        style: const TextStyle(color: Colors.white70),
         controller: _controller,
         validator: (value) {
           if (value == null || value.isEmpty) {
             return 'Please enter username';
           }
 
-          if (RegExp(r'^.{1,20}$').hasMatch(value)==false) {
+          if (RegExp(r'^.{1,20}$').hasMatch(value) == false) {
             return 'Username must be up to 20 characters';
           }
           registerModel.username = value;
@@ -28,6 +29,8 @@ class InputUsername extends StatelessWidget{
         decoration: const InputDecoration(
           labelText: 'Username',
           hintText: 'Enter your username',
+          labelStyle: TextStyle(color: Colors.white30),
+          hintStyle: TextStyle(color: Colors.white30),
           border: OutlineInputBorder(),
         ),
       ),

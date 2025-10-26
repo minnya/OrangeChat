@@ -1,9 +1,9 @@
-import 'package:orange_chat/components/commons/show_dialog.dart';
-import 'package:orange_chat/const/variables.dart';
-import 'package:orange_chat/models/supabase/register.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:orange_chat/components/commons/show_dialog.dart';
+import 'package:orange_chat/const/variables.dart';
+import 'package:orange_chat/models/supabase/register.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uuid/uuid.dart';
 
@@ -91,7 +91,6 @@ class AuthHelper {
         email: loginUserEmail,
         password: loginUserPassword,
       );
-      await showOKDialog(context: context!, message: "Successfully logged in");
       return true;
     } catch (e) {
       AuthException authException = e as AuthException;

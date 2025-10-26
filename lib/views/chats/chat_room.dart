@@ -62,7 +62,7 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
             StarRatingWidget(
               starCount: 5,
               rating: widget.room.score ?? 0,
-              size: Size.medium,
+              size: Size.small,
               alignment: Alignment.topCenter,
             )
           ],

@@ -14,10 +14,13 @@ class StarRatingWidget extends StatefulWidget {
   final int starCount;
   final double rating;
   final Size? size;
+  final EdgeInsets? padding;
   final Color? color;
+  final void Function()? onTap;
   final TextStyle? textStyle;
   final Alignment? alignment;
   final void Function(int starIndex)? onStarTap;
+
   const StarRatingWidget(
       {super.key,
       this.starCount = 5, // Default to 5 stars
@@ -26,6 +29,8 @@ class StarRatingWidget extends StatefulWidget {
       this.color,
       this.onStarTap,
       this.alignment,
+      this.onTap,
+      this.padding,
       this.textStyle});
 
   @override
@@ -89,8 +94,10 @@ class _StarRatingWidgetState extends State<StarRatingWidget> {
             : 20;
     // Creating a row of stars based on the starCount
     return CustomContainer(
+      onTap: widget.onTap,
       alignment: widget.alignment,
       direction: Direction.HORIZONTAL,
+      padding: widget.padding,
       children: List.generate(
             widget.starCount, // Generate a row with 'starCount' stars
             (final index) => buildStar(context, index),
