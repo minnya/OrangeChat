@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:orange_chat/components/commons/custom_container.dart';
 import 'package:orange_chat/components/commons/show_dialog.dart';
+import 'package:orange_chat/components/commons/star_rating.dart';
 import 'package:orange_chat/helpers/supabase/follow_model_helper.dart';
 import 'package:orange_chat/helpers/supabase/user_model_helper.dart';
 import 'package:orange_chat/models/supabase/users.dart';
@@ -63,17 +65,37 @@ class _UserListItemState extends State<UserListItem> {
                 color: Theme.of(context).colorScheme.inversePrimary,
               ),
             ),
-            title: Text(
-              item.age != null && item.age!.isNotEmpty
-                  ? "${item.name}, ${item.age}"
-                  : item.name,
-              style: titleStyle,
+            title: CustomContainer(
+              direction: Direction.HORIZONTAL,
+              alignment: Alignment.topCenter,
+              children: [
+                Text(
+                  item.age != null && item.age!.isNotEmpty
+                      ? "${item.name}, ${item.age}"
+                      : item.name,
+                  style: titleStyle,
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                StarRatingWidget(
+                  alignment: Alignment.topLeft,
+                  starCount: 5,
+                  rating: item.score,
+                  size: Size.small,
+                ),
+              ],
             ),
-            subtitle: Text(
-              "${item.prefecture}",
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: bodyStyle,
+            subtitle: CustomContainer(
+              alignment: Alignment.topLeft,
+              children: [
+                Text(
+                  "${item.prefecture}",
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: bodyStyle,
+                ),
+              ],
             ),
             trailing: Column(
               crossAxisAlignment: CrossAxisAlignment.end,

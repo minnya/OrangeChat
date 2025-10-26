@@ -9,26 +9,27 @@ class CustomContainer extends StatelessWidget {
   final Decoration? decoration;
   final double? width;
   final double? height;
+  final int? flex;
   final BoxConstraints? constraints;
   final EdgeInsetsGeometry? margin;
   final void Function()? onTap;
   final bool expand;
 
-  const CustomContainer({
-    super.key,
-    this.direction,
-    this.children,
-    this.padding,
-    this.alignment,
-    this.color,
-    this.decoration,
-    this.width,
-    this.height,
-    this.constraints,
-    this.margin,
-    this.onTap,
-    this.expand = false,
-  });
+  const CustomContainer(
+      {super.key,
+      this.direction,
+      this.children,
+      this.padding,
+      this.alignment,
+      this.color,
+      this.decoration,
+      this.width,
+      this.height,
+      this.constraints,
+      this.margin,
+      this.onTap,
+      this.expand = false,
+      this.flex});
 
   @override
   Widget build(BuildContext context) {
@@ -45,19 +46,26 @@ class CustomContainer extends StatelessWidget {
         margin: margin,
         child: direction == Direction.HORIZONTAL
             ? Row(
-          crossAxisAlignment: _mapAlignmentToCrossAxisAlignment(alignment),
-          mainAxisAlignment: _mapAlignmentToMainAxisAlignment(alignment),
-          children: children ?? [],
-        )
+                crossAxisAlignment:
+                    _mapAlignmentToCrossAxisAlignment(alignment),
+                mainAxisAlignment: _mapAlignmentToMainAxisAlignment(alignment),
+                children: children ?? [],
+              )
             : Column(
-          crossAxisAlignment: _mapAlignmentToCrossAxisAlignment(alignment),
-          mainAxisAlignment: _mapAlignmentToMainAxisAlignment(alignment),
-          children: children ?? [],
-        ),
+                crossAxisAlignment:
+                    _mapAlignmentToCrossAxisAlignment(alignment),
+                mainAxisAlignment: _mapAlignmentToMainAxisAlignment(alignment),
+                children: children ?? [],
+              ),
       ),
     );
 
-    return expand ? Expanded(child: container) : container;
+    return expand
+        ? Expanded(
+            flex: flex ?? 1,
+            child: container,
+          )
+        : container;
   }
 
   CrossAxisAlignment _mapAlignmentToCrossAxisAlignment(Alignment? alignment) {

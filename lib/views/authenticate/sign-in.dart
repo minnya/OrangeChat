@@ -28,6 +28,16 @@ class SignInPage extends StatelessWidget {
               horizontal: (screenWidth - contentWidth) / 2 + 30,
               // vertical: (remainingHeight-contentHeight)/2
             ),
+            decoration: const BoxDecoration(
+                gradient: LinearGradient(
+              colors: [
+                Color(0xFF194077),
+                Color(0xFF194077),
+                Color(0xFFC752BE),
+              ],
+              begin: Alignment.bottomRight,
+              end: Alignment.topLeft,
+            )),
             children: const [
               _Logo(),
               SizedBox(
@@ -48,16 +58,10 @@ class _Logo extends StatelessWidget {
     return CustomContainer(
       direction: Direction.HORIZONTAL,
       children: [
-        SizedBox(
-            height: 60,
-            width: 60,
-            child: Image.asset("assets/images/icon_orange.png")),
         Text(
-          "Orange",
+          "REVEAL ME",
           style: Theme.of(context).textTheme.titleLarge!.copyWith(
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).primaryColor,
-              fontSize: 50),
+              fontWeight: FontWeight.bold, color: Colors.white70, fontSize: 50),
         )
       ],
     );
@@ -77,6 +81,23 @@ class __FormContentState extends State<_FormContent> {
   final TextEditingController _passwordController = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool isButtonEnabled = false;
+  @override
+  void initState() {
+    super.initState();
+    _emailController.addListener(() {
+      setState(() {
+        isButtonEnabled = _emailController.text.isNotEmpty &&
+            _passwordController.text.isNotEmpty;
+      });
+    });
+    _passwordController.addListener(() {
+      setState(() {
+        isButtonEnabled = _emailController.text.isNotEmpty &&
+            _passwordController.text.isNotEmpty;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,6 +113,7 @@ class __FormContentState extends State<_FormContent> {
             TextFormField(
               autofillHints: const [AutofillHints.username],
               controller: _emailController,
+              style: const TextStyle(color: Colors.white),
               validator: (value) {
                 // add email validation
                 if (value == null || value.isEmpty) {
@@ -110,7 +132,12 @@ class __FormContentState extends State<_FormContent> {
               decoration: const InputDecoration(
                 labelText: 'Email',
                 hintText: 'Enter your email',
-                prefixIcon: Icon(Icons.email_outlined),
+                labelStyle: TextStyle(color: Colors.white30),
+                hintStyle: TextStyle(color: Colors.white30),
+                prefixIcon: Icon(
+                  Icons.email_outlined,
+                  color: Colors.white30,
+                ),
                 border: OutlineInputBorder(),
               ),
             ),
@@ -118,6 +145,7 @@ class __FormContentState extends State<_FormContent> {
             TextFormField(
               autofillHints: const [AutofillHints.password],
               controller: _passwordController,
+              style: const TextStyle(color: Colors.white),
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter some text';
@@ -132,12 +160,20 @@ class __FormContentState extends State<_FormContent> {
               decoration: InputDecoration(
                   labelText: 'Password',
                   hintText: 'Enter your password',
-                  prefixIcon: const Icon(Icons.lock_outline_rounded),
+                  labelStyle: const TextStyle(color: Colors.white30),
+                  hintStyle: const TextStyle(color: Colors.white30),
+                  prefixIcon: const Icon(
+                    Icons.lock_outline_rounded,
+                    color: Colors.white30,
+                  ),
                   border: const OutlineInputBorder(),
                   suffixIcon: IconButton(
-                    icon: Icon(_isPasswordVisible
-                        ? Icons.visibility_off
-                        : Icons.visibility),
+                    icon: Icon(
+                      _isPasswordVisible
+                          ? Icons.visibility_off
+                          : Icons.visibility,
+                      color: Colors.white30,
+                    ),
                     onPressed: () {
                       setState(() {
                         _isPasswordVisible = !_isPasswordVisible;
@@ -149,9 +185,8 @@ class __FormContentState extends State<_FormContent> {
             RichText(
                 text: TextSpan(
                     text: 'Forgot password?',
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        color: Colors.white30, fontWeight: FontWeight.bold),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
                         Navigator.push(
@@ -176,18 +211,21 @@ class __FormContentState extends State<_FormContent> {
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 ),
-                onPressed: () async {
-                  if (_formKey.currentState?.validate() ?? false) {
-                    await AuthHelper(context: context)
-                        .login(_emailController.text, _passwordController.text);
-                    if (AuthHelper().isSignedIn()) {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context) => MyApp()));
-                    }
-                  }
-                },
+                onPressed: isButtonEnabled
+                    ? () async {
+                        if (_formKey.currentState?.validate() ?? false) {
+                          await AuthHelper(context: context).login(
+                              _emailController.text, _passwordController.text);
+                          if (AuthHelper().isSignedIn()) {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        MyApp()));
+                          }
+                        }
+                      }
+                    : null,
               ),
             ),
             // const TextDivider(text: "or"),

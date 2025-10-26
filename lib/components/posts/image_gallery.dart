@@ -32,15 +32,24 @@ class _ImageGalleryState extends State<ImageGallery> {
       final image = Image.network("${ConstVariables.SUPABASE_HOSTNAME}$url");
       final completer = Completer<Size>();
       image.image.resolve(const ImageConfiguration()).addListener(
-        ImageStreamListener((ImageInfo info, bool _) {
-          sizes.add(
-              Size(info.image.width.toDouble(), info.image.height.toDouble()));
-          completer.complete(
-              Size(info.image.width.toDouble(), info.image.height.toDouble()));
-        }),
-      );
+            ImageStreamListener(
+              (ImageInfo info, bool _) {
+                sizes.add(Size(
+                    info.image.width.toDouble(), info.image.height.toDouble()));
+                completer.complete(Size(
+                    info.image.width.toDouble(), info.image.height.toDouble()));
+              },
+              onError: (error, stackTrace) {
+                // 取得に失敗した場合はデフォルトサイズを追加
+                const defaultSize = Size(100, 100);
+                sizes.add(defaultSize);
+                if (!completer.isCompleted) completer.complete(defaultSize);
+              },
+            ),
+          );
       await completer.future;
     }
+    if (!mounted) return;
     setState(() {
       _imageSizes = sizes;
       _isLoading = false;

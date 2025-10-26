@@ -1,7 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:orange_chat/components/chats/room_list_item.dart';
 import 'package:orange_chat/helpers/supabase/room_model_helper.dart';
 import 'package:orange_chat/models/supabase/rooms.dart';
-import 'package:flutter/material.dart';
 
 class RoomListScreen extends StatefulWidget {
   const RoomListScreen({super.key});
@@ -11,12 +11,10 @@ class RoomListScreen extends StatefulWidget {
 }
 
 class _RoomListScreenState extends State<RoomListScreen> {
-
   Future<List<RoomModel>> getAllRooms() async {
     List<RoomModel> roomModelList = await RoomModelHelper().getRoomList();
     return roomModelList;
   }
-
 
   @override
   void dispose() {
@@ -26,7 +24,6 @@ class _RoomListScreenState extends State<RoomListScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     RoomModelHelper().subscribeMessageChange((p0) {
       getAllRooms();
       setState(() {});
@@ -50,17 +47,17 @@ class _RoomListScreenState extends State<RoomListScreen> {
                     child: CircularProgressIndicator(),
                   );
                 }
-                List<RoomModel> chatroomList = snapshot.data!;
-                return chatroomList.isEmpty
-                    ?const Center(child: Text("No Contents"))
-                    :ListView.builder(
-                    itemCount: chatroomList.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      RoomModel item = chatroomList[index];
-                      return RoomListItem(
-                        item: item,
-                      );
-                    });
+                List<RoomModel>? chatroomList = snapshot.data;
+                return chatroomList == null || chatroomList.isEmpty
+                    ? const Center(child: Text("No Contents"))
+                    : ListView.builder(
+                        itemCount: chatroomList.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          RoomModel item = chatroomList[index];
+                          return RoomListItem(
+                            item: item,
+                          );
+                        });
               }),
         ));
   }
