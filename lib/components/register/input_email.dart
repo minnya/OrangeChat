@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../models/supabase/register.dart';
 
-class InputEmail extends StatelessWidget{
+class InputEmail extends StatelessWidget {
   final _emailController = TextEditingController();
   final RegisterModel registerModel;
 
@@ -13,6 +13,7 @@ class InputEmail extends StatelessWidget{
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       child: TextFormField(
+        style: const TextStyle(color: Colors.white70),
         autofillHints: const [AutofillHints.newUsername],
         controller: _emailController,
         keyboardType: TextInputType.emailAddress,
@@ -23,7 +24,7 @@ class InputEmail extends StatelessWidget{
           }
 
           bool emailValid = RegExp(
-              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                  r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
               .hasMatch(value);
           if (!emailValid) {
             return 'Please enter a valid email';
@@ -35,7 +36,12 @@ class InputEmail extends StatelessWidget{
         decoration: const InputDecoration(
           labelText: 'Email',
           hintText: 'Enter your email',
-          prefixIcon: Icon(Icons.email_outlined),
+          labelStyle: TextStyle(color: Colors.white30),
+          hintStyle: TextStyle(color: Colors.white30),
+          prefixIcon: Icon(
+            Icons.email_outlined,
+            color: Colors.white30,
+          ),
           border: OutlineInputBorder(),
         ),
       ),

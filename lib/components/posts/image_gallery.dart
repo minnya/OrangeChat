@@ -31,28 +31,25 @@ class _ImageGalleryState extends State<ImageGallery> {
     for (var url in widget.imageUrls) {
       final image = Image.network("${ConstVariables.SUPABASE_HOSTNAME}$url");
       final completer = Completer<Size>();
-
       image.image.resolve(const ImageConfiguration()).addListener(
             ImageStreamListener(
               (ImageInfo info, bool _) {
-                final size = Size(
-                    info.image.width.toDouble(), info.image.height.toDouble());
-                sizes.add(size);
-                completer.complete(size);
+                sizes.add(Size(
+                    info.image.width.toDouble(), info.image.height.toDouble()));
+                completer.complete(Size(
+                    info.image.width.toDouble(), info.image.height.toDouble()));
               },
               onError: (error, stackTrace) {
-                debugPrint("Image load error: $error");
-
-                // デフォルトサイズ（エラー時）
-                const fallbackSize = Size(100, 100);
-                sizes.add(fallbackSize);
-                completer.complete(fallbackSize);
+                // 取得に失敗した場合はデフォルトサイズを追加
+                const defaultSize = Size(100, 100);
+                sizes.add(defaultSize);
+                if (!completer.isCompleted) completer.complete(defaultSize);
               },
             ),
           );
-
       await completer.future;
     }
+    if (!mounted) return;
     setState(() {
       _imageSizes = sizes;
       _isLoading = false;

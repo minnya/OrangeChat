@@ -49,7 +49,7 @@ class _InAppPurchaseExampleState extends State<InAppPurchaseExample> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('In-App Purchase Example'),
+        title: const Text('In-App Purchase'),
       ),
       body: _available
           ? ListView.builder(
@@ -61,12 +61,12 @@ class _InAppPurchaseExampleState extends State<InAppPurchaseExample> {
             subtitle: Text(product.description),
             trailing: ElevatedButton(
               onPressed: () => _buyProduct(product),
-              child: Text('購入する'),
+              child: const Text('Purchase'),
             ),
           );
         },
       )
-          : Center(child: Text('購入機能が利用できません')),
+          : const Center(child: Text('Payment feature is not available')),
     );
   }
 }

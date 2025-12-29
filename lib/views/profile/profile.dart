@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:orange_chat/components/commons/bottom_report_block.dart';
+import 'package:orange_chat/components/commons/custom_container.dart';
 import 'package:orange_chat/components/commons/photo_preview_round.dart';
 import 'package:orange_chat/components/profile/button_follow.dart';
 import 'package:orange_chat/components/profile/button_message.dart';
@@ -8,8 +9,10 @@ import 'package:orange_chat/helpers/auth_helper.dart';
 import 'package:orange_chat/views/posts/posts.dart';
 import 'package:orange_chat/views/profile/followers.dart';
 import 'package:orange_chat/views/profile/followings.dart';
+import 'package:orange_chat/views/profile/score.dart';
 import 'package:orange_chat/views/settings/main.dart';
 
+import '../../components/commons/star_rating.dart';
 import '../../components/commons/urge_login_dialog.dart';
 import '../../helpers/supabase/user_model_helper.dart';
 import '../../models/supabase/users.dart';
@@ -47,7 +50,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final TextStyle bodyStyle = Theme.of(context).textTheme.bodyMedium!;
     final TextStyle titleStyle = Theme.of(context).textTheme.titleMedium!;
     return Scaffold(
       appBar: AppBar(
@@ -98,79 +100,90 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: Column(
                       children: [
                         Expanded(flex: 1, child: _TopPortion(user)),
-                        Expanded(
+                        CustomContainer(
+                          padding: const EdgeInsets.all(16),
+                          direction: Direction.VERTICAL,
+                          alignment: Alignment.topCenter,
+                          expand: true,
                           flex: 2,
-                          child: Padding(
-                            padding: const EdgeInsets.all(16),
-                            child: Column(
-                              children: [
-                                //名前・年齢
-                                Text(
-                                  user.age != null && user.age!.isNotEmpty
-                                      ? "${user.name}, ${user.age}"
-                                      : user.name,
-                                  style: titleStyle,
-                                ),
-
-                                Padding(
-                                  padding: const EdgeInsets.all(8),
-                                  child: Column(
-                                    children: [
-                                      user.prefecture == null
-                                          ? const SizedBox()
-                                          : Text(user.prefecture!,
-                                              style: bodyStyle),
-                                      user.description == null
-                                          ? const SizedBox()
-                                          : Text(user.description!,
-                                              style: bodyStyle),
-                                    ],
-                                  ),
-                                ),
-                                //編集ボタン、フォローボタン、メッセージボタン
-                                Container(
-                                  child: widget.userId == null
-                                      ? ElevatedButton.icon(
-                                          onPressed: () {
-                                            if (AuthHelper().isSignedIn() ==
-                                                false) {
-                                              showUrgeLoginDialog(context);
-                                              return;
-                                            }
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        EditProfileScreen()));
-                                          },
-                                          icon: const Icon(
-                                            Icons.edit,
-                                            size: 15,
-                                          ),
-                                          label: Text(
-                                            "Edit Profile",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .labelLarge,
-                                          ),
-                                        )
-                                      : Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            FollowButton(userModel: user),
-                                            const SizedBox(width: 16.0),
-                                            MessageButton(user: user),
-                                          ],
-                                        ),
-                                ),
-                                const SizedBox(height: 16),
-                                _ProfileInfoRow(
-                                  user: user,
-                                )
-                              ],
+                          children: [
+                            //名前・年齢
+                            Text(
+                              user.age != null && user.age!.isNotEmpty
+                                  ? "${user.name}, ${user.age}"
+                                  : user.name,
+                              style: titleStyle,
                             ),
-                          ),
+                            user.prefecture == null && user.country == null
+                                ? const SizedBox()
+                                : Text(
+                                    [user.prefecture, user.country]
+                                        .where((s) => s != null)
+                                        .join(", "),
+                                    style:
+                                        const TextStyle(color: Colors.black54)),
+                            StarRatingWidget(
+                              starCount: 5,
+                              rating: user.score,
+                              size: Size.medium,
+                              padding: const EdgeInsets.all(8),
+                              onTap: () {
+                                showCupertinoModalBottomSheet(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      ScoreScreen(
+                                    userModel: user,
+                                  ),
+                                );
+                              },
+                            ),
+
+                            user.description == null
+                                ? const SizedBox()
+                                : Text(
+                                    user.description!,
+                                  ),
+                            //編集ボタン、フォローボタン、メッセージボタン
+                            CustomContainer(
+                              direction: Direction.HORIZONTAL,
+                              padding: const EdgeInsets.all(16),
+                              children: widget.userId == null
+                                  ? [
+                                      ElevatedButton.icon(
+                                        onPressed: () {
+                                          if (AuthHelper().isSignedIn() ==
+                                              false) {
+                                            showUrgeLoginDialog(context);
+                                            return;
+                                          }
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      EditProfileScreen()));
+                                        },
+                                        icon: const Icon(
+                                          Icons.edit,
+                                          size: 15,
+                                        ),
+                                        label: Text(
+                                          "Edit Profile",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelLarge,
+                                        ),
+                                      )
+                                    ]
+                                  : [
+                                      FollowButton(userModel: user),
+                                      const SizedBox(width: 16.0),
+                                      MessageButton(user: user),
+                                    ],
+                            ),
+                            _ProfileInfoRow(
+                              user: user,
+                            )
+                          ],
                         ),
                       ],
                     ),

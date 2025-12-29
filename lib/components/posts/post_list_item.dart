@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:orange_chat/components/commons/custom_container.dart';
+import 'package:orange_chat/components/posts/dislike_button.dart';
 import 'package:orange_chat/components/posts/image_gallery.dart';
 import 'package:orange_chat/components/posts/like_button.dart';
 import 'package:orange_chat/components/posts/reply_button.dart';
@@ -71,8 +72,9 @@ class _PostListItemState extends State<PostListItem> {
           padding: EdgeInsets.zero,
           constraints: const BoxConstraints(),
           children: [
-            ReplyButton(postModel: widget.item),
             LikeButton(item: widget.item),
+            DislikeButton(item: widget.item),
+            ReplyButton(postModel: widget.item),
           ],
         ),
         Container(
