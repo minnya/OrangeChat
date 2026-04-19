@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultTextStyle.merge(
       child: MaterialApp(
+        title: 'Chappy',
         // initialRoute: "/app",
         onGenerateRoute: (RouteSettings setting) {
           Widget destinationPage = const Scaffold();

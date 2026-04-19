@@ -1,4 +1,4 @@
-package com.minnya.orange_chat
+package com.minnya.chappy
 
 import io.flutter.embedding.android.FlutterActivity
 
