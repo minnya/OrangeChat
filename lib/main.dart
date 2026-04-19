@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
           return MaterialPageRoute(builder: (context) => destinationPage);
         },
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: const Color(0x00194077)),
+          colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFFFF6124)),
           useMaterial3: true,
           appBarTheme: AppBarTheme(
             titleTextStyle: Theme.of(context).textTheme.titleMedium,

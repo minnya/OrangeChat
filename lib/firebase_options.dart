@@ -64,7 +64,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '909148010311',
     projectId: 'minnya-orange-chat',
     storageBucket: 'minnya-orange-chat.appspot.com',
-    iosBundleId: 'com.minnya.orangeChat',
+    iosBundleId: 'com.minnya.chappy',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -73,7 +73,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '909148010311',
     projectId: 'minnya-orange-chat',
     storageBucket: 'minnya-orange-chat.appspot.com',
-    iosBundleId: 'com.minnya.orangeChat',
+    iosBundleId: 'com.minnya.chappy',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(

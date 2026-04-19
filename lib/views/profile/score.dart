@@ -169,7 +169,7 @@ class _ScoreScreen extends State<ScoreScreen> {
                             PieChartSectionData(
                               value: scoreModel.blockUsers.toDouble(),
                               color: scoreModel.blockUsers < 3
-                                  ? Colors.orange
+                                  ? const Color(0xFFFF6124)
                                   : Colors.red,
                               title: '',
                             ),
@@ -188,7 +188,7 @@ class _ScoreScreen extends State<ScoreScreen> {
                             PieChartSectionData(
                               value: scoreModel.blockPosts.toDouble(),
                               color: scoreModel.blockPosts < 10
-                                  ? Colors.orange
+                                  ? const Color(0xFFFF6124)
                                   : Colors.red,
                               title: '',
                             ),
