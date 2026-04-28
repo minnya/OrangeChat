@@ -24,12 +24,12 @@ class _ResetPasswordPageState extends State<BasePagePresenter> {
         autovalidateMode: AutovalidateMode.always,
         onChanged: () => setState(() {}),
         child: CustomContainer(
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
               gradient: LinearGradient(
             colors: [
-              Color(0xFF194077),
-              Color(0xFF194077),
-              Color(0xFFC752BE),
+              Theme.of(context).colorScheme.primary.withValues(alpha: 1),
+              Theme.of(context).colorScheme.primary.withValues(alpha: 0.8),
+              Theme.of(context).colorScheme.primary.withValues(alpha: 1),
             ],
             begin: Alignment.bottomRight,
             end: Alignment.topLeft,

@@ -11,6 +11,7 @@ import 'package:orange_chat/views/user-list/user_list.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'components/commons/custom_container.dart';
+import 'const/variables.dart';
 
 class SimpleBottomNavigation extends StatefulWidget {
   const SimpleBottomNavigation({super.key});
@@ -63,7 +64,7 @@ class _SimpleBottomNavigationState extends State<SimpleBottomNavigation> {
                             ? NavigationRailLabelType.selected
                             : null,
                         leading: Text(
-                          "REVEAL ME",
+                          ConstVariables.APP_NAME,
                           style: Theme.of(context)
                               .textTheme
                               .titleLarge!

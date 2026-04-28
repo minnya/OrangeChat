@@ -1,15 +1,14 @@
-
 import '../helpers/remote_config.dart';
 
-class ConstVariables{
+class ConstVariables {
   static String SUPABASE_HOSTNAME = "";
   static String SUPABASE_ANONKEY = "";
   static String APP_HOSTNAME = "";
+  static String APP_NAME = "Chappy";
 
-  static Future<void> init()async{
+  static Future<void> init() async {
     SUPABASE_HOSTNAME = await RemoteConfigHelper().get("SUPABASE_BASE_URL");
     SUPABASE_ANONKEY = await RemoteConfigHelper().get("SUPABASE_ANONKEY");
     APP_HOSTNAME = await RemoteConfigHelper().get("APP_BASE_URL");
   }
-
 }

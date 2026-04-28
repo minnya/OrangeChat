@@ -5,6 +5,8 @@ import 'package:orange_chat/helpers/auth_helper.dart';
 import 'package:orange_chat/main.dart';
 import 'package:orange_chat/views/authenticate/reset-password.dart';
 
+import '../../const/variables.dart';
+
 class SignInPage extends StatelessWidget {
   const SignInPage({super.key});
 
@@ -13,7 +15,7 @@ class SignInPage extends StatelessWidget {
     final double screenWidth = MediaQuery.of(context).size.width;
     final double contentWidth = screenWidth > 600 ? 600 : screenWidth;
     return Scaffold(
-      appBar: AppBar(),
+      extendBodyBehindAppBar: true,
       body: LayoutBuilder(builder: (context, constraints) {
         double screenHeight = MediaQuery.of(context).size.height;
         double keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
@@ -21,29 +23,59 @@ class SignInPage extends StatelessWidget {
         bool isWideScreen = screenWidth > 600;
         return CustomContainer(
             alignment: Alignment.center,
-            // direction: isWideScreen?Direction.HORIZONTAL:Direction.VERTICAL,
             height: remainingHeight,
-            // constraints: BoxConstraints(minHeight: constraints.maxHeight),
-            padding: EdgeInsets.symmetric(
-              horizontal: (screenWidth - contentWidth) / 2 + 30,
-              // vertical: (remainingHeight-contentHeight)/2
-            ),
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
                 gradient: LinearGradient(
               colors: [
-                Color(0xFF194077),
-                Color(0xFF194077),
-                Color(0xFFC752BE),
+                Theme.of(context).colorScheme.primary.withValues(alpha: 1),
+                Theme.of(context).colorScheme.primary.withValues(alpha: 0.8),
+                Theme.of(context).colorScheme.primary.withValues(alpha: 1),
               ],
               begin: Alignment.bottomRight,
               end: Alignment.topLeft,
             )),
-            children: const [
-              _Logo(),
-              SizedBox(
-                height: 24,
+            children: [
+              AppBar(
+                backgroundColor: Colors.transparent,
+                foregroundColor: Colors.white70,
+                leading: IconButton(
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                              content: const Text("Do you want to exit?"),
+                              actions: [
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text("Cancel")),
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text("OK")),
+                              ],
+                            ));
+                  },
+                  icon: const Icon(Icons.arrow_back_rounded),
+                ),
               ),
-              _FormContent()
+              Expanded(
+                  child: CustomContainer(
+                padding: EdgeInsets.symmetric(
+                  horizontal: (screenWidth - contentWidth) / 2 + 30,
+                  // vertical: (remainingHeight-contentHeight)/2
+                ),
+                children: const [
+                  _Logo(),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  _FormContent()
+                ],
+              ))
             ]);
       }),
     );
@@ -59,7 +91,7 @@ class _Logo extends StatelessWidget {
       direction: Direction.HORIZONTAL,
       children: [
         Text(
-          "REVEAL ME",
+          ConstVariables.APP_NAME,
           style: Theme.of(context).textTheme.titleLarge!.copyWith(
               fontWeight: FontWeight.bold, color: Colors.white70, fontSize: 50),
         )
