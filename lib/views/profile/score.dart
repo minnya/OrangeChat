@@ -64,6 +64,7 @@ class _ScoreScreen extends State<ScoreScreen> {
                     shrinkWrap: true, // スクロールさせたくない場合
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10,
+                    physics: const NeverScrollableScrollPhysics(),
                     children: [
                       PieChartCard(
                         title: "Profile completeness",
@@ -201,7 +202,7 @@ class _ScoreScreen extends State<ScoreScreen> {
                             ),
                           ]),
                     ],
-                  )
+                  ),
                 ],
               ),
             );
