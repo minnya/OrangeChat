@@ -30,10 +30,8 @@ class UserModelHelper {
     if (filterModel.getFilterString().isNotEmpty) {
       builder = builder.or("and(${filterModel.getFilterString()})");
     }
-    PostgrestList userPostgrestList = await builder
-        .order("score", ascending: false)
-        .order("updated_at", ascending: false)
-        .limit(100);
+    PostgrestList userPostgrestList =
+        await builder.order("calc_rank", ascending: false).limit(100);
 
     List<UserModel> userList =
         userPostgrestList.map((userMap) => UserModel.fromMap(userMap)).toList();
