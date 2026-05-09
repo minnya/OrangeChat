@@ -4,6 +4,8 @@ import 'package:orange_chat/models/supabase/edit_users.dart';
 import 'package:orange_chat/models/supabase/place.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../tools/url.dart';
+
 class UserModel extends ChangeNotifier {
   final id;
   String name;
@@ -44,9 +46,7 @@ class UserModel extends ChangeNotifier {
     return UserModel(
       id: data["id"],
       name: data['name'],
-      iconUrl: data['icon_url'] == null
-          ? null
-          : "${ConstVariables.SUPABASE_HOSTNAME}${data['icon_url']}",
+      iconUrl: resolveUrl(data['icon_url'], data["id"]),
       age: data['age'],
       gender: data["gender"],
       country: data["country"],
